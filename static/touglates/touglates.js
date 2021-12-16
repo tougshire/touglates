@@ -5,7 +5,6 @@ var ctrl_opener = document.getElementById('input_opener')
     }
 }
 
-
 function addRelatedPopupButton( selectId, modelName, popupUrl ) {
   var select = document.getElementById(selectId)
   if( select != null ) {
@@ -34,6 +33,7 @@ function refreshFrom(optionValue, optionLabel, modelName) {
         control.removeAttribute('updateFrom' + modelName)
       }
       control.appendChild(newOption)
+      control.dispatchEvent(new Event('change'))
     }
 }
 
@@ -52,13 +52,13 @@ function addFormsetListener(buttonId, formsetPrefix, emptyDivId, insertPointId )
                 var newDivChildren = newDiv.getElementsByTagName('*')
                 var newFormNum = originalFormCount
                 for(let i = 0; i < newDivChildren.length; i++) {
-                child = newDivChildren[i]
-                if(child.id) {
-                    child.setAttribute('id', child.id.replaceAll('__prefix__', newFormNum) )
-                }
-                if(child.name) {
-                    child.setAttribute('name', child.name.replaceAll('__prefix__', newFormNum) )
-                }
+                    child = newDivChildren[i]
+                    if(child.id) {
+                        child.setAttribute('id', child.id.replaceAll('__prefix__', newFormNum) )
+                    }
+                    if(child.name) {
+                        child.setAttribute('name', child.name.replaceAll('__prefix__', newFormNum) )
+                    }
                 }
                 newDiv.classList.add("formset")
                 newDiv.style.display="block"
