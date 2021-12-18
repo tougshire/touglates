@@ -21,13 +21,16 @@ function addRelatedPopupButton( selectId, modelName, popupUrl ) {
   }
 }
 
-function refreshFrom(optionValue, optionLabel, modelName) {
+function refreshFrom(optionValue, optionLabel, modelName, attrs=[]) {
     let controlIds = getControlIds(modelName)
     for( controlId of controlIds ) {
       let control = document.getElementById(controlId)
       let newOption = document.createElement('option')
       newOption.value = optionValue
       newOption.appendChild(document.createTextNode(optionLabel))
+      for(attr of attrs){
+          newOption.setAttribute(attr.name, attr.value)
+      }
       if( control.getAttribute('updateFrom' + modelName) > "" ) {
         newOption.setAttribute('selected', 'SELECTED')
         control.removeAttribute('updateFrom' + modelName)
