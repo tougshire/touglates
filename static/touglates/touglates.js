@@ -21,6 +21,45 @@ function addRelatedPopupButton( selectId, modelName, popupUrl ) {
   }
 }
 
+function addFilterInput( selectId ) {
+  var select = document.getElementById(selectId)
+  if( select != null ) {
+    input = document.createElement('input')
+    input.placeholder='filter'
+    input.classList.add("touglates", "filterbox")
+    input.addEventListener('keyup', function() {
+        var options = select.options
+        var val = input.value.toLowerCase()
+        var visibleOptions=[]
+        for (option of options) {
+            if( ( val.length == 0 ) || ( ( ' ' + option.innerText.toLowerCase() ).indexOf(val) > 0 ) ) {
+            option.style.removeProperty('display')
+            visibleOptions.push(option)
+            } else {
+            option.style.display='None'
+            }
+        }
+        var selectedOptions = select.selectedOptions
+        var selectedOptionVisible=false
+        if(visibleOptions.length>0) {
+            for(selectedOption of selectedOptions){
+                console.log(selectedOption.innerText)
+                console.log(visibleOptions.includes(selectedOption))
+                if(visibleOptions.includes(selectedOption)) {
+                    selectedOptionVisible=true
+                    break
+                }
+            }
+            if(!selectedOptionVisible) {
+                visibleOptions[0].selected="SELECTED"
+            }
+        }
+    });
+    select.parentNode.insertBefore(input, select.nextSibling)
+
+  }
+}
+
 function refreshFrom(optionValue, optionLabel, modelName, attrs=[]) {
     let controlIds = getControlIds(modelName)
     for( controlId of controlIds ) {
