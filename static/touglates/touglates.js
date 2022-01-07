@@ -43,8 +43,6 @@ function addFilterInput( selectId ) {
         var selectedOptionVisible=false
         if(visibleOptions.length>0) {
             for(selectedOption of selectedOptions){
-                console.log(selectedOption.innerText)
-                console.log(visibleOptions.includes(selectedOption))
                 if(visibleOptions.includes(selectedOption)) {
                     selectedOptionVisible=true
                     break
@@ -54,6 +52,7 @@ function addFilterInput( selectId ) {
                 visibleOptions[0].selected="SELECTED"
             }
         }
+        select.dispatchEvent(new Event('change'))
     });
     select.parentNode.insertBefore(input, select.nextSibling)
 
