@@ -92,30 +92,18 @@ function addFormsetListener(buttonId, formsetPrefix, emptyDivId, insertPointId )
         }
     });
 }
+function addRelatedPopupButton( selectId, modelName, popupUrl ) {
+    var select = document.getElementById(selectId)
+    if( select != null ) {
+      button = document.createElement('button')
+      button.type = 'button'
+      button.id = 'btn_related_' + selectId
+      button.appendChild(document.createTextNode('add'))
+      button.addEventListener('click', function() {
+        window.open( popupUrl )
+        select.setAttribute('updateFrom' + modelName, 'True')
+      });
+      select.parentNode.insertBefore(button, select.nextSibling)
 
-/**
- * Adds to an element an event listener which opens a popup to edit model related to the object.
- *
- * This function expects an element such as a
- * This function expects the calling window has a list of related object divs each of which has a class name 'related-' followed by the model name
- * This function expects an empty div which this function will use as a template.  That div's id is 'div_' followed by the model name followed by '-empty'
- * The empty div will contain a data element for each field to be copied into the div.  Those elements have attributes named 'data-field-' followed by the field name
- *
- * ex: <div id='div_model-empty'><span data-field-key1></span></div>
- *
- * @param {object} fields              Key value pairs for fields
- * @param {string} model               Name of related model
- * @param {string} [insertBeforeId=''] The ID of the element before which the new div is to be inserted.
- *                                     if blank, the function will use the empty div
- * @param {bool}   [delinbefore=false] If the element before which the new div is to be inserted is to be deleted
- *
- */
-function addAddRelatedPopupEvent(buttonId) {
-    addButton = document.getElementById('buttonId') /*doesn't have to be a button */
-    if(typeof(addButton) != 'undefined' && addButton != null){
-        addButton.addEventListener('click', function(e) {
-        e.preventDefault()
-        window.open(e.target.href)
-        });
     }
-}
+  }
