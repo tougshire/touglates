@@ -1,48 +1,69 @@
 if(window.opener) {
-var ctrl_opener = document.getElementById('input_opener')
+    var ctrl_opener = document.getElementById('input_opener')
     if( ctrl_opener != null ) {
         ctrl_opener.value = window.opener.location.href
     }
 }
 
 function addFilterInput( selectId ) {
-  var select = document.getElementById(selectId)
-  if( select != null ) {
-    input = document.createElement('input')
-    input.placeholder='filter'
-    input.classList.add("touglates", "filterbox")
-    input.addEventListener('keyup', function() {
-        var options = select.options
-        var val = input.value.toLowerCase()
-        var visibleOptions=[]
-        for (option of options) {
-            if( ( val.length == 0 ) || ( ( ' ' + option.innerText.toLowerCase() ).indexOf(val) > 0 ) ) {
-            option.style.removeProperty('display')
-            visibleOptions.push(option)
-            } else {
-            option.style.display='None'
-            }
-        }
-        var selectedOptions = select.selectedOptions
-        var selectedOptionVisible=false
-        if(visibleOptions.length>0) {
-            for(selectedOption of selectedOptions){
-                if(visibleOptions.includes(selectedOption)) {
-                    selectedOptionVisible=true
-                    break
+    var select = document.getElementById(selectId)
+    if( select != null ) {
+        input = document.createElement('input')
+        input.placeholder='filter'
+        input.classList.add("touglates", "filterbox")
+        input.addEventListener('keyup', function() {
+            var options = select.options
+            var val = input.value.toLowerCase()
+            var visibleOptions=[]
+            for (option of options) {
+                if( ( val.length == 0 ) || ( ( ' ' + option.innerText.toLowerCase() ).indexOf(val) > 0 ) ) {
+                option.style.removeProperty('display')
+                visibleOptions.push(option)
+                } else {
+                option.style.display='None'
                 }
             }
-            if(!selectedOptionVisible) {
-                visibleOptions[0].selected="SELECTED"
+            var selectedOptions = select.selectedOptions
+            var selectedOptionVisible=false
+            if(visibleOptions.length>0) {
+                for(selectedOption of selectedOptions){
+                    if(visibleOptions.includes(selectedOption)) {
+                        selectedOptionVisible=true
+                        break
+                    }
+                }
+                if(!selectedOptionVisible) {
+                    visibleOptions[0].selected="SELECTED"
+                }
             }
-        }
-        select.dispatchEvent(new Event('change'))
-    });
-    select.parentNode.insertBefore(input, select.nextSibling)
-
-  }
+            select.dispatchEvent(new Event('change'))
+        });
+        select.parentNode.insertBefore(input, select.nextSibling)
+    }
 }
 
+<<<<<<< HEAD
+function addOptionFromPopup(optionValue, optionLabel, modelName, attrs=[]) {
+    let controlIds = getControlIds(modelName)
+    for( controlId of controlIds ) {
+      let control = document.getElementById(controlId)
+      let newOption = document.createElement('option')
+      newOption.value = optionValue
+      newOption.appendChild(document.createTextNode(optionLabel))
+      for(attr of attrs){
+          newOption.setAttribute(attr.name, attr.value)
+      }
+      if( control.getAttribute('updateFrom' + modelName) > "" ) {
+        newOption.setAttribute('selected', 'SELECTED')
+        control.removeAttribute('updateFrom' + modelName)
+      }
+      control.appendChild(newOption)
+      control.dispatchEvent(new Event('change'))
+    }
+}
+
+=======
+>>>>>>> 674d20a7cd6b643e8d952c0a5780ec82bfcce55d
 function addFormsetListener(buttonId, formsetPrefix, emptyDivId, insertPointId ) {
     document.getElementById(buttonId).addEventListener('click', function(e){
         e.preventDefault();
@@ -75,6 +96,8 @@ function addFormsetListener(buttonId, formsetPrefix, emptyDivId, insertPointId )
     });
 }
 
+<<<<<<< HEAD
+=======
 
 function addFormsetFormAfterPopup(fields, model, insertNearId='', after=false, delNear=false) {
     var emptyDisplayDiv = document.getElementById('div_display-' + model + '-empty')
@@ -184,6 +207,7 @@ function addDivAfterPopup(fields, model, insertNearId='', after=false, delNear=f
     }
 }
 
+>>>>>>> 674d20a7cd6b643e8d952c0a5780ec82bfcce55d
 /**
  * Adds to an element an event listener which opens a popup to edit model related to the object.
  *
@@ -204,9 +228,18 @@ function addDivAfterPopup(fields, model, insertNearId='', after=false, delNear=f
 function addAddRelatedPopupEvent(buttonId) {
     addButton = document.getElementById('buttonId') /*doesn't have to be a button */
     if(typeof(addButton) != 'undefined' && addButton != null){
+<<<<<<< HEAD
+        addButton.addEventListener('click', function(e) {
+        e.preventDefault()
+        window.open(e.target.href)
+        });
+    }
+}
+=======
       addButton.addEventListener('click', function(e) {
         e.preventDefault()
         window.open(e.target.href)
       });
     }
   }
+>>>>>>> 674d20a7cd6b643e8d952c0a5780ec82bfcce55d
