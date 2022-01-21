@@ -16,11 +16,20 @@ function addFilterInput( selectId ) {
             var val = input.value.toLowerCase()
             var visibleOptions=[]
             for (option of options) {
-                if( ( val.length == 0 ) || ( ( ' ' + option.innerText.toLowerCase() ).indexOf(val) > 0 ) ) {
-                option.style.removeProperty('display')
-                visibleOptions.push(option)
+                let textforfilter=''
+                if( option.getAttribute('data-textforfilter') > '') {
+                    textforfilter = option.getAttribute('data-textforfilter')
+                }
+                if(
+                    ( val.length == 0 ) ||
+                    ( ( ' ' + option.innerText.toLowerCase() ).indexOf(val) > 0 ) ||
+                    ( ( ' ' + textforfilter.toLowerCase() ).indexOf(val) > 0 )
+                )
+                {
+                    option.style.removeProperty('display')
+                    visibleOptions.push(option)
                 } else {
-                option.style.display='None'
+                    option.style.display='None'
                 }
             }
             var selectedOptions = select.selectedOptions
