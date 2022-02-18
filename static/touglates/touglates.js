@@ -52,7 +52,7 @@ function addFilterInput( selectId ) {
 }
 
 function addOptionFromPopup(optionValue, optionLabel, modelName, attrs=[]) {
-    let controlIds = getControlIds(modelName)
+    let controlIds = getControlIdsForPopups(modelName)
     for( controlId of controlIds ) {
       let control = document.getElementById(controlId)
       let newOption = document.createElement('option')
