@@ -13,7 +13,7 @@ Touglates currently provides a few features.
 
 ## tougshire_tags
 
-Touglates tags is a template tags file.  To use tougshire tags place {% load touglates_tags %} in your template
+tougshire_tags.py is a template tags file.  To use tougshire tags place {% load touglates_tags %} in your template
 
 ### project_include_file
 
