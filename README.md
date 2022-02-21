@@ -9,13 +9,15 @@ Until further notice this project is in initial development and updates might br
 
 Download or clone touglates as an app folder in your Django project and include `touglates.apps.TouglatesConfig` in your INSTALLED_APPS
 
-Touglates currently provides a few features.
+## Features
 
-## tougshire_tags
+Touglates currently provides a few features.  Currently, I'm only describing tougshire_tags because it's the closest to being ready
+
+### tougshire_tags
 
 tougshire_tags.py is a template tags file.  To use tougshire tags place {% load touglates_tags %} in your template
 
-### project_include_file
+#### project_include_file
 
 project_include_file is a simple tag in tougshire_tags.py that allows you to name one or more include files in your settings and refer to it or them in your templates.  The advantage of this is it makes your apps more portable.  For example, if you have multiple projects, each with a main menu file, and at least one shared app, that app can call {% project_include_file 'main menu' %} in each project.
 
