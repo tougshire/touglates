@@ -16,15 +16,3 @@ def project_include_file( name='' ):
             return settings.PROJECT_INCLUDE_FILES[ name ]
         except AttributeError:
             return None
-
-@register.simple_tag
-def project_css_file():
-    try:
-        return settings.PROJECT_CSS_FILE
-    except AttributeError:
-        return None
-
-@register.simple_tag
-def test():
-    return 'tp m2kd22'
-
