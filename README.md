@@ -17,13 +17,13 @@ Touglates tags is a template tags file.  To use tougshire tags place {% load tou
 
 ### project_include_file
 
-project_include_file is a simple tag that allows you to name an include file in your settings file in refer to it in your app template.
+project_include_file is a simple tag in tougshire_tags.py that allows you to name one or more include files in your settings and refer to it or them in your templates.
 
-You do this by adding PROJECT_INCLUDE_FILE to settings as a string, then using {% project_include_file %} to include the file
+You do this by adding PROJECT_INCLUDE_FILE to settings as a string, then, in a template which loads tougshire_tags, using the tag {% project_include_file %}  to include the file.
 
-You can designate more than one file, by adding PROJECT_INCLUDE_FILES as a dictionary in your settings, then using {% project_include_file 'filename key' %}
+You can designate more than one file, by adding PROJECT_INCLUDE_FILES as a dictionary in your settings, then using {% project_include_file 'filename_key' %}
 
-The advantage of this is it makes your apps more portable.  Assuming you have multiple projects each with a main menu file, and at least one shared app, that app can call {% project_include_file 'main menu' %} in each app.
+The advantage of this is it makes your apps more portable.  For example, if you have multiple projects, each with a main menu file, and at least one shared app, that app can call {% project_include_file 'main menu' %} in each project.
 
 If there is no PROJECT_INCLUDE_FILE setting, or no PROJECT_INCLUDE_FILES with a 'main menu' key, the tag will fail silently and no file will be included.  This way, your app can be included in projects that don't have the setting
 
