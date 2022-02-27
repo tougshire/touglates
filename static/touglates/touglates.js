@@ -70,37 +70,6 @@ function addOptionFromPopup(optionValue, optionLabel, modelName, attrs=[]) {
     }
 }
 
-function addFormsetListener(buttonId, formsetPrefix, emptyDivId, insertPointId ) {
-    document.getElementById(buttonId).addEventListener('click', function(e){
-        e.preventDefault();
-        var totalForms = document.getElementById(formsetPrefix + 'TOTAL_FORMS')
-        if( totalForms != null ) {
-            var originalFormCount = parseInt(totalForms.value)
-            if( !( isNaN( originalFormCount ) ) ) {
-                var newFormCount = originalFormCount + 1
-                totalForms.value = newFormCount
-                var emptyDiv = document.getElementById(emptyDivId)
-                var newDiv = emptyDiv.cloneNode(true)
-                newDiv.removeAttribute('id')
-                var newDivChildren = newDiv.getElementsByTagName('*')
-                var newFormNum = originalFormCount
-                for(let i = 0; i < newDivChildren.length; i++) {
-                    child = newDivChildren[i]
-                    if(child.id) {
-                        child.setAttribute('id', child.id.replaceAll('__prefix__', newFormNum) )
-                    }
-                    if(child.name) {
-                        child.setAttribute('name', child.name.replaceAll('__prefix__', newFormNum) )
-                    }
-                }
-                newDiv.classList.add("formset")
-                newDiv.style.display="block"
-                var insertPoint = document.getElementById( insertPointId )
-                insertPoint.parentNode.insertBefore( newDiv, insertPoint.nextSibling )
-            }
-        }
-    });
-}
 function addRelatedPopupButton( selectId, modelName, popupUrl ) {
     var select = document.getElementById(selectId)
     if( select != null ) {
@@ -114,5 +83,55 @@ function addRelatedPopupButton( selectId, modelName, popupUrl ) {
       });
       select.parentNode.insertBefore(button, select.nextSibling)
 
+    }
+  }
+
+function toggleVisibility(targetElId, switcherElId="", forceTo=2, showText="", hideText="", dataName='style_display', visibleStyle="") {
+
+    var targetEl = document.getElementById('targetElId')
+    var switcherEl = undefined
+    if(switcherElId > "") {
+        switcherEl = document.getElementById(switcherElId)
+    }
+
+    if(!(visibleStyle > "" ) ) {
+        if(targetEl.style.display > '' && targetEl.style.display != "none") {
+            visibleStyle = targetEl.style.display
+        } else {
+            if( targetEl.dataset[dataName] > '' ) {
+                visibleStyle = targetEl.dataset[dataName]
+            }
+        }
+    }
+    if(!(showText > "") && switcherEl) {
+        if(switcherEl.dataset['showtext'] > '') {
+            showText = switcherEl.dataset['showtext']
+        }
+    }
+    if(!(hideText > "") && switcherEl) {
+        if(switcherEl.dataset['hidetext'] > '') {
+            hideText = switcherEl.dataset['hidetext']
+        }
+    }
+    if(forceTo==2) { /* toggle */
+        if( targetEl.style.display != "none" ) {
+            targetEl.dataset[dataName] = visibleStyle
+            targetEl.style.display = "none"
+            if(switcherEl) {
+                switcherEl.textContent = showText
+            }
+        } else {
+            targetEl.style.display = visibleStyle
+            if(switcherEl) {
+                switcherEl.textContent = hideText
+            }
+        }
+    } else if(forceTo==1) { /* show */
+        targetEl.dataset[dataName] = visibleStyle
+        switcherEl.textContent = hideText
+    } else if(forceTo==0) { /* hide */
+        targetEl.dataset[dataName] = visibleStyle
+        targetEl.style.display = "none"
+        switcherEl.textContent = showText
     }
   }
