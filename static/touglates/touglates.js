@@ -88,7 +88,7 @@ function addRelatedPopupButton( selectId, modelName, popupUrl ) {
 
 function toggleVisibility(targetElId, switcherElId="", forceTo=2, showText="", hideText="", dataName='style_display', visibleStyle="") {
 
-    var targetEl = document.getElementById('targetElId')
+    var targetEl = document.getElementById(targetElId)
     var switcherEl = undefined
     if(switcherElId > "") {
         switcherEl = document.getElementById(switcherElId)
