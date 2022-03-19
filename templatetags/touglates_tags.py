@@ -16,3 +16,7 @@ def project_include_file( name='' ):
             return settings.PROJECT_INCLUDE_FILES[ name ]
         except AttributeError:
             return None
+
+@register.filter
+def remove_linebreaks(value):
+    return( str(value).replace("\n", " ").replace("\r", " "))
