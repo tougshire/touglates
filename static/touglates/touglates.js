@@ -58,7 +58,7 @@ function addOptionFromPopup(optionValue, optionLabel, modelName, attrs=[]) {
       let newOption = document.createElement('option')
       newOption.value = optionValue
       newOption.appendChild(document.createTextNode(optionLabel))
-      for(attr of attrs){
+      for(let attr of attrs){
           newOption.setAttribute(attr.name, attr.value)
       }
       if( control.getAttribute('updateFrom' + modelName) > "" ) {
@@ -70,34 +70,34 @@ function addOptionFromPopup(optionValue, optionLabel, modelName, attrs=[]) {
     }
 }
 
-function addRelatedPopupButton( selectId, modelName, addUrl, editUrl='' ) {
+function addRelatedPopupButton( selectId, modelName, addUrl, editUrl='', addLabel='add', editLabel='edit' ) {
     var select = document.getElementById(selectId)
     if( select != null ) {
-      button_add = document.createElement('button')
-      button_add.type = 'button'
-      button_add.id = 'btn_related_add_' + selectId
-      button_add.appendChild(document.createTextNode('add'))
-      button_add.addEventListener('click', function() {
-        window.open( addUrl )
-        select.setAttribute('updateFrom' + modelName, 'True')
-      });
-      select.parentNode.insertBefore(button_add, select.nextSibling)
-      if( editUrl > '') {
-        button_edit = document.createElement('button')
-        button_edit.type = 'button'
-        button_edit.id = 'btn_related_edit_' + selectId
-        button_edit.appendChild(document.createTextNode('edit'))
-        button_edit.addEventListener('click', function() {
-          if(select.value > 0) {
-              editUrl = editUrl.replace('\/0\/', '/' + select.value + '/')
-             window.open( editUrl )
-              select.setAttribute('updateFrom' + modelName, 'True')
-          }
+        button_add = document.createElement('button')
+        button_add.type = 'button'
+        button_add.id = 'btn_related_add_' + selectId
+        button_add.appendChild(document.createTextNode(addLabel))
+        button_add.addEventListener('click', function() {
+            window.open( addUrl )
+            select.setAttribute('updateFrom' + modelName, 'True')
         });
+        select.parentNode.insertBefore(button_add, select.nextSibling)
+        if( editUrl > '') {
+            button_edit = document.createElement('button')
+            button_edit.type = 'button'
+            button_edit.id = 'btn_related_edit_' + selectId
+            button_edit.appendChild(document.createTextNode(editLabel))
+            button_edit.addEventListener('click', function() {
+                if(select.value > 0) {
+                editUrl = editUrl.replace('\/0\/', '/' + select.value + '/')
+                window.open( editUrl )
+                select.setAttribute('updateFrom' + modelName, 'True')
+                }
+            });
         select.parentNode.insertBefore(button_edit, button_add.nextSibling)
-      }
+        }
     }
-  }
+}
 
 function toggleVisibility(targetElId, switcherElId="", forceTo=2, showText="", hideText="", dataName='style_display', visibleStyle="") {
 
