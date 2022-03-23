@@ -1,0 +1,20 @@
+<div class="list-field field column">
+  {{ before_field }}{{ before_fields }}
+    {{ field_1_label }} {% if href_1 %}<a href="{{ href_1 }}" {{ href_1_atts }}>{{ field_1 }}</a>{% else %}{{ field_1 }}{% endif %}
+    {% if field_2 %}
+      {{ between_fields }} {{ field_2_label }} {% if href_2 %}<a href="{{ href_2 }}" {{ href_2_atts }}>{{ field_2 }}</a>{% else %}{{ field_2 }}{% endif %}
+      {% if field_3 %}
+        {{ between_fields }} {{ field_3_label }} {% if href_3 %}<a href="{{ href_3 }}" {{ href_3_atts }}>{{ field_3 }}</a>{% else %}{{ field_3 }}{% endif %}
+        {% if field_4 %}
+          {{ between_fields }} {{ field_4_label }} {% if href_4 %}<a href="{{ href_4 }}" {{ href_4_atts }}>{{ field_4 }}</a>{% else %}{{ field_4 }}{% endif %}
+          {% if field_5 %}
+            {{ between_fields }} {{ field_5_label }} {% if href_5 %}<a href="{{ href_5 }}" {{ href_4_atts }}>{{ field_5 }}</a>{% else %}{{ field_5 }}{% endif %}
+            {% if field_6 %}
+              {{ between_fields }} {{ field_6_label }} {% if href_5 %}<a href="{{ href_6 }}" {{ href_6_atts }}>{{ field_6 }}</a>{% else %}{{ field_6 }}{% endif %}
+            {% endif %}
+          {% endif %}
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  {{ after_fields }}{{ after_field }}
+</div>
