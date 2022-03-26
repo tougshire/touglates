@@ -99,6 +99,55 @@ function addRelatedPopupButton( selectId, modelName, addUrl, editUrl='', addLabe
     }
 }
 
+function showFilterField(select) {
+    let ctlNum = select.id.substring(19)
+    let val_control
+    for(opt of select.options) {
+      if(opt.value){
+        document.getElementById('div_filter__' + opt.value + '__' + ctlNum ).style.display="none"
+        document.getElementById('ctl_filter__op__' + opt.value + '__' + ctlNum ).removeAttribute('name')
+        val_control = document.getElementById('ctl_filter__value__' + opt.value + '__' + ctlNum )
+        val_control.removeAttribute('name')
+        if( val_control.dataset.siblings ) {
+          for(i=0; i < (val_control.dataset.siblings); i++) {
+            document.getElementById('ctl_filter__value__' + opt.value + '__' + ctlNum + '__' + i ).removeAttribute('name')
+          }
+        }
+      }
+    }
+    if(select.value) {
+      select.classList.remove('grayedout')
+      select.name="filter__fieldname__" + ctlNum
+      document.getElementById('div_filter__' + select.value  + '__' + ctlNum ).style.display="block"
+      document.getElementById('ctl_filter__op__' + select.value + '__' + ctlNum ).name="filter__op__" + ctlNum
+      val_control = document.getElementById('ctl_filter__value__' + select.value + '__' + ctlNum )
+      val_control.name="filter__value__" + ctlNum
+      if( val_control.dataset.siblings ) {
+        for(i=0; i < (val_control.dataset.siblings); i++) {
+          document.getElementById('ctl_filter__value__' + select.value + '__' + ctlNum + '__' + i ).name="filter__value__" + ctlNum
+        }
+      }
+    } else {
+      select.removeAttribute("name")
+    }
+  }
+  function addFilterFieldEventListeners(qty_searches) {
+    for( ctlNum = 0; ctlNum < qty_searches; ctlNum++ ) {
+
+        document.getElementById('ctl_filter__field__' + ctlNum).addEventListener('change', function(e) {
+            console.log('about to call ShotFilterField', 'e.target=', e.target )
+            showFilterField(e.target)
+        })
+        showFilterField(document.getElementById('ctl_filter__field__' + ctlNum))
+        if( ctlNum < qty_searches - 1) {
+            let localCtlNum = ctlNum
+        document.getElementById('div_fieldsearch__' + ctlNum).addEventListener('click', function() {
+            document.getElementById('div_fieldsearch__' + ( localCtlNum + 1 )).style.removeProperty('display')
+        })
+        }
+    }
+  }
+
 function toggleVisibility(targetElId, switcherElId="", forceTo=2, showText="", hideText="", dataName='style_display', visibleStyle="") {
 
     var targetEl = document.getElementById(targetElId)
