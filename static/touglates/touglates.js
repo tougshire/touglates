@@ -197,3 +197,59 @@ function toggleVisibility(targetElId, switcherElId="", forceTo=2, showText="", h
         switcherEl.textContent = showText
     }
   }
+
+function hide_multiselect(multiSelect) {
+	console.log(multiSelect.style.backgroundcolor)
+	let textBox = document.createElement("input")
+	textBox.dataset.multiSelect=multiSelect.id
+	textBox.addEventListener("click", function(e){
+		e.preventDefault()
+		show_multiselect(textBox)
+	})
+	let selected_qty = 0
+	let selected_text = ''
+	for(op=0; op < multiSelect.options.length; op++) {
+		if(multiSelect.options[op].selected){
+			selected_qty++
+			if(selected_qty == 1 ) {
+				selected_text = multiSelect.options[op].innerText
+			} else if (selected_qty == 2 ) {
+				selected_text = selected_text + ', ' + multiSelect.options[op].innerText
+			} else if (selected_qty > 2 ) {
+				selected_text = selected_text + ", ..."
+				break
+			}
+		}
+	}
+	textBox.value = selected_text
+	multiSelect.parentNode.insertBefore(textBox, multiSelect)
+	multiSelect.dataset.displaystyle=multiSelect.style.display
+	multiSelect.style.display = "none"
+}
+
+function show_multiselect(textBox) {
+	let multiSelect = document.getElementById(textBox.dataset.multiSelect)
+	multiSelect.parentNode.insertBefore(textBox, multiSelect)
+	multiSelect.style.display = multiSelect.dataset.displaystyle
+	textBox.remove()
+}
+
+function init_multiselect(multiSelect) {
+	multiSelect.addEventListener("blur", function(e){
+		hide_multiselect(e.target)
+	})
+	hide_multiselect(multiSelect)
+}
+
+function init_multiselect_container(container) {
+
+	container.addEventListener("focusout", function(e) {
+        if(e.target.tagName == 'SELECT' && e.target.getAttribute("multiple")>"") {
+            hide_multiselect(e.target)
+        }
+	})
+    multiSelects = container.querySelectorAll('select[multiple="MULTIPLE"]')
+    for(multiSelect of multiSelects) {
+        hide_multiselect(multiSelect)
+    }
+}
