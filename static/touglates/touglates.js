@@ -135,7 +135,6 @@ function showFilterField(select) {
     for( ctlNum = 0; ctlNum < qty_searches; ctlNum++ ) {
 
         document.getElementById('ctl_filter__field__' + ctlNum).addEventListener('change', function(e) {
-            console.log('about to call ShotFilterField', 'e.target=', e.target )
             showFilterField(e.target)
         })
         showFilterField(document.getElementById('ctl_filter__field__' + ctlNum))
@@ -199,9 +198,8 @@ function toggleVisibility(targetElId, switcherElId="", forceTo=2, showText="", h
   }
 
 function hide_multiselect(multiSelect) {
-	console.log(multiSelect.style.backgroundcolor)
 	let textBox = document.createElement("input")
-	textBox.dataset.multiSelect=multiSelect.id
+	textBox.dataset.multiselect=multiSelect.id
 	textBox.addEventListener("click", function(e){
 		e.preventDefault()
 		show_multiselect(textBox)
@@ -228,28 +226,44 @@ function hide_multiselect(multiSelect) {
 }
 
 function show_multiselect(textBox) {
-	let multiSelect = document.getElementById(textBox.dataset.multiSelect)
+	let multiSelect = document.getElementById(textBox.dataset.multiselect)
 	multiSelect.parentNode.insertBefore(textBox, multiSelect)
 	multiSelect.style.display = multiSelect.dataset.displaystyle
 	textBox.remove()
 }
 
-function init_multiselect(multiSelect) {
-	multiSelect.addEventListener("blur", function(e){
-		hide_multiselect(e.target)
-	})
-	hide_multiselect(multiSelect)
+function hide_multiselects(container, target){
+    multiSelects = container.querySelectorAll('select[multiple="MULTIPLE"]')
+    for(multiSelect of multiSelects) {
+        if(multiSelect.id != target.dataset.multiselect){
+            if(multiSelect.id != target.id ) {
+                if(multiSelect.id != target.parentNode.id) {
+                    if(multiSelect.style.display != 'none'){
+                        hide_multiselect(multiSelect)
+                    }
+                }
+            }
+        }
+    }
 }
 
 function init_multiselect_container(container) {
 
-	container.addEventListener("focusout", function(e) {
-        if(e.target.tagName == 'SELECT' && e.target.getAttribute("multiple")>"") {
-            hide_multiselect(e.target)
-        }
+	container.addEventListener("click", function(e) {
+        hide_multiselects(container, e.target)
 	})
-    multiSelects = container.querySelectorAll('select[multiple="MULTIPLE"]')
-    for(multiSelect of multiSelects) {
-        hide_multiselect(multiSelect)
-    }
+
+    // container.addEventListener("focusout", function(e) {
+    //     if(e.target.tagName == 'SELECT' && e.target.getAttribute("multiple")>"") {
+    //         hide_multiselect(e.target)
+    //     }
+	// })
+	// container.addEventListener("mouseout", function(e) {
+    //     if(e.target.tagName == 'SELECT' && e.target.getAttribute("multiple")>"") {
+    //         hide_multiselect(e.target)
+    //     }
+	// })
+
+    hide_multiselects(container, container)
+
 }
