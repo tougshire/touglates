@@ -1,6 +1,8 @@
+import markdown as md
 from django import template
-from django.urls import reverse
 from django.conf import settings
+from django.template.defaultfilters import stringfilter
+from django.urls import reverse
 
 register = template.Library()
 
@@ -20,3 +22,9 @@ def project_include_file( name='' ):
 @register.filter
 def remove_linebreaks(value):
     return( str(value).replace("\n", " ").replace("\r", " "))
+
+
+@register.filter()
+@stringfilter
+def markdown(value):
+    return md.markdown(value, extensions=['markdown.extensions.fenced_code'])
