@@ -1,4 +1,15 @@
-<div class="list-field field column">
+{% if tag %}
+<{{ tag }} class="list-field field column {{ extra_classes }}">
+  {{ before_field }}
+  {% if href %}
+    <a href="{{ href }}" {{ href_atts }}>{{ field }}</a>
+  {% else %}
+    {{ field }}
+  {% endif %}
+  {{ after_field }}
+</{{ tag }}>
+{% else %}
+<div class="list-field field column  {{ extra_classes }}">
   {{ before_field }}
   {% if href %}
     <a href="{{ href }}" {{ href_atts }}>{{ field }}</a>
@@ -7,3 +18,4 @@
   {% endif %}
   {{ after_field }}
 </div>
+{% endif %}
