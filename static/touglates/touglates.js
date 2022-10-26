@@ -8,7 +8,7 @@ if(window.opener) {
 function addFilterInput( selectId ) {
     var select = document.getElementById(selectId)
     if( select != null ) {
-        input = document.createElement('input')
+        var input = document.createElement('input')
         input.placeholder='filter'
         input.classList.add("touglates", "filterbox")
         input.addEventListener('keyup', function() {
