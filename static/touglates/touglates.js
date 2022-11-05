@@ -235,7 +235,6 @@ function show_multiselect(textBox) {
 	multiSelect.style.display = multiSelect.dataset.displaystyle
     multiSelect.focus()
 	textBox.remove()
-
 }
 
 function hide_multiselects(container, target){
