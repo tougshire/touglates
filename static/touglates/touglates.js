@@ -204,7 +204,11 @@ function hide_multiselect(multiSelect) {
 		e.preventDefault()
 		show_multiselect(textBox)
 	})
-	let selected_qty = 0
+	textBox.addEventListener("focus", function(e){
+		e.preventDefault()
+		show_multiselect(textBox)
+	})
+    let selected_qty = 0
 	let selected_text = ''
 	for(op=0; op < multiSelect.options.length; op++) {
 		if(multiSelect.options[op].selected){
@@ -229,7 +233,9 @@ function show_multiselect(textBox) {
 	let multiSelect = document.getElementById(textBox.dataset.multiselect)
 	multiSelect.parentNode.insertBefore(textBox, multiSelect)
 	multiSelect.style.display = multiSelect.dataset.displaystyle
+    multiSelect.focus()
 	textBox.remove()
+
 }
 
 function hide_multiselects(container, target){
