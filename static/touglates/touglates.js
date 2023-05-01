@@ -4,7 +4,10 @@ if(window.opener) {
         ctrl_opener.value = window.opener.location.href
     }
 }
-
+/* 
+addFilterInput
+Adds a text box next to a select that can be used to filter the choices in the select
+*/
 function addFilterInput( selectId ) {
     var select = document.getElementById(selectId)
     if( select != null ) {
@@ -20,6 +23,8 @@ function addFilterInput( selectId ) {
                 if( option.getAttribute('data-textforfilter') > '') {
                     textforfilter = option.getAttribute('data-textforfilter')
                 }
+                // Display the blank value along with any options that match the filter
+                // Find matches by testing the inner text or the attribute 'data-textforfilter' if it exists
                 if(
                     ( val.length == 0 ) ||
                     ( ( ' ' + option.innerText.toLowerCase() ).indexOf(val) > 0 ) ||
