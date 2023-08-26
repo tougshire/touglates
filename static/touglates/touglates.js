@@ -205,6 +205,7 @@ function toggleVisibility(targetElId, switcherElId="", forceTo=2, showText="", h
 function hide_multiselect(multiSelect) {
 	let textBox = document.createElement("input")
 	textBox.dataset.multiselect=multiSelect.id
+    textBox.id = 'ctl_multiselectdisplay_' + multiSelect.id
 	textBox.addEventListener("click", function(e){
 		e.preventDefault()
 		show_multiselect(textBox)
@@ -242,17 +243,21 @@ function show_multiselect(textBox) {
 	textBox.remove()
 }
 
-function hide_multiselects(container, target){
+function hide_multiselects(container, target=null){
     multiSelects = container.querySelectorAll('select[multiple="MULTIPLE"]')
     for(multiSelect of multiSelects) {
-        if(multiSelect.id != target.dataset.multiselect){
-            if(multiSelect.id != target.id ) {
-                if(multiSelect.id != target.parentNode.id) {
-                    if(multiSelect.style.display != 'none'){
-                        hide_multiselect(multiSelect)
+        if(target !== null) {
+            if(multiSelect.id != target.dataset.multiselect){
+                if(multiSelect.id != target.id ) {
+                    if(multiSelect.id != target.parentNode.id) {
+                        if(multiSelect.style.display != 'none'){
+                            hide_multiselect(multiSelect)
+                        }
                     }
                 }
             }
+        } else {
+            hide_multiselect(multiSelect)
         }
     }
 }
