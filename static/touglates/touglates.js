@@ -194,11 +194,15 @@ function toggleVisibility(targetElId, switcherElId="", forceTo=2, showText="", h
         }
     } else if(forceTo==1) { /* show */
         targetEl.dataset[dataName] = visibleStyle
-        switcherEl.textContent = hideText
+        if(switcherEl) {
+            switcherEl.textContent = hideText
+        }
     } else if(forceTo==0) { /* hide */
         targetEl.dataset[dataName] = visibleStyle
         targetEl.style.display = "none"
-        switcherEl.textContent = showText
+        if(switcherEl) {
+            switcherEl.textContent = showText
+        }
     }
   }
 
@@ -238,6 +242,9 @@ function hide_multiselect(multiSelect) {
 function show_multiselect(textBox) {
 	let multiSelect = document.getElementById(textBox.dataset.multiselect)
 	multiSelect.parentNode.insertBefore(textBox, multiSelect)
+    multiSelect.style.position="absolute"
+    multiSelect.style.zIndex=1
+    
 	multiSelect.style.display = multiSelect.dataset.displaystyle
     multiSelect.focus()
 	textBox.remove()
