@@ -70,7 +70,17 @@ function addOptionFromPopup(optionValue, optionLabel, modelName, attrs=[]) {
         newOption.setAttribute('selected', 'SELECTED')
         control.removeAttribute('updateFrom' + modelName)
       }
-      control.appendChild(newOption)
+      if(control.options.length > 0) {
+        control.insertBefore(newOption, control.firstChild)
+        if(control.options.length > 1) {
+            if("" == control.options[1].value) {
+                nullOption = control.removeChild(control.options[1])
+                control.insertBefore(nullOption, control.firstChild)
+            }
+        }
+      } else {
+        control.appendChild(newOption)
+      }
       control.dispatchEvent(new Event('change'))
     }
 }
