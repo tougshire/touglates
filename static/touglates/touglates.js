@@ -299,3 +299,4 @@ function init_multiselect_container(container) {
     hide_multiselects(container, container)
 
 }
+
