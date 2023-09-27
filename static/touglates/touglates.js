@@ -4,7 +4,7 @@ if(window.opener) {
         ctrl_opener.value = window.opener.location.href
     }
 }
-/* 
+/*
 addFilterInput
 Adds a text box next to a select that can be used to filter the choices in the select
 */
@@ -254,7 +254,7 @@ function show_multiselect(textBox) {
 	multiSelect.parentNode.insertBefore(textBox, multiSelect)
     multiSelect.style.position="absolute"
     multiSelect.style.zIndex=1
-    
+
 	multiSelect.style.display = multiSelect.dataset.displaystyle
     multiSelect.focus()
 	textBox.remove()
@@ -285,18 +285,32 @@ function init_multiselect_container(container) {
         hide_multiselects(container, e.target)
 	})
 
-    // container.addEventListener("focusout", function(e) {
-    //     if(e.target.tagName == 'SELECT' && e.target.getAttribute("multiple")>"") {
-    //         hide_multiselect(e.target)
-    //     }
-	// })
-	// container.addEventListener("mouseout", function(e) {
-    //     if(e.target.tagName == 'SELECT' && e.target.getAttribute("multiple")>"") {
-    //         hide_multiselect(e.target)
-    //     }
-	// })
-
     hide_multiselects(container, container)
 
 }
+
+function showNewFormsetForm(findClass, removeClass='_findClass', addClass='', addDisplayStyle='block', message='Please save before adding') {
+    let newForms = document.getElementsByClassName(findClass)
+    if (newForms.length > 0) {
+      let newForm = newForms[0]
+      removeClasses = removeClass.split(',')
+      for (removeClass of removeClasses) {
+        if(removeClass == "_findClass") {
+          removeClass = findClass;
+        }
+        newForm.classList.remove(removeClass)
+      }
+      if(addClass > "") {
+        addClasses = addClass.split(',')
+        for (addClass of addClasses) {
+          newForm.classList.add(addClass)
+        }
+      }
+      if(addDisplayStyle > "") {
+        newForm.style.display = addDisplayStyle
+      }
+    } else {
+      alert(message)
+    }
+  }
 
