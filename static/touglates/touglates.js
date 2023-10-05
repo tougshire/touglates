@@ -314,3 +314,31 @@ function showNewFormsetForm(findClass, removeClass='_findClass', addClass='', ad
     }
   }
 
+/*
+  Used in a form where inline formsets are hidden and the related 
+  objects are displayed with non-form elements
+  When the user wants to edit one of the related objects, the user clicks on a button which
+  hides the non-form elements and displays the formset form 
+*/
+
+  function enableFormsetForm(formid, displayid) {
+    let form = document.getElementById(formid)
+    document.getElementById(formid).style.display="block"
+    document.getElementById(displayid).style.display="none"
+}
+
+/*
+  Used in a form where the extra formset forms are hidden.
+  When the user wants to add a related object, the user clicks on a button which
+  displays a formset form 
+*/
+function enableAddFormsetForm(formclass) {
+    let newforms = document.getElementsByClassName(formclass)
+    if( newforms.length > 0) {
+      let newform = newforms[0]
+      newform.style.display="block"
+      newform.classList.remove(formclass)
+    } else {
+      alert('please save before adding more')
+    }
+  }
