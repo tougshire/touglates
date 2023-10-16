@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE HTML>
+
+<html>
+  {% block head %}
+    <head>
+      {% block head_meta %}
+        {% if object %}
+          {% if object.title %}
+            <meta property="og:title" content="{{ object.title|safe  }}" />
+          {% elif object.headline %}
+              <meta property="og:title" content="{{ object.headline|safe  }}" />
+          {% elif object.name %}
+            <meta property="og:title" content="{{ object.name|safe  }}" />
+          {% endif %}
+          {% if object.featured_image %}
+            <meta property="og:image" content="{{ object.featured_image.url  }}" />
+            <meta property="og:image:alt" content="{{ object.featured_image.alt_text  }}" />
+            <meta property="og:description" content="{{ object.summary }}" />
+          {% endif %}
+        {% endif %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      {% endblock %}
+      {% block head_title %}
+        <title>
+          {{ touglates.SITE_NAME }}{% if object.title %} : {{ object.title|safe  }}{% elif object.headline %} : {{ object.headline|safe  }}{% elif object.name %} : {{ object.name|safe }}{% endif %}
+        </title>
+      {% endblock %}
+      {% block head_stylesheet %}
+        <link rel="stylesheet" href="{% static 'touglates/touglates.css' %}">
+        {% if touglates.COLORSCHEME %}
+          {% with touglates.COLORSCHEME as colorscheme %}
+            <link rel="stylesheet" href="{% static 'touglates/{{ COLORSCHEME }}.css">
+          {% endwith %}
+        {% endif %}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap" rel="stylesheet">
+      {% endblock %}
+      {% block head_script %}
+        <script src="{% static 'touglates/touglates.js' %}"></script>
+      {% endblock %}
+      {% block head_extra %}
+      {% endblock %}
+    </head>
+  {% endblock %}
+  {% block body %}{% endblock %}
+</html>
