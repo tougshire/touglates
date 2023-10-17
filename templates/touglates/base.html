@@ -23,7 +23,7 @@
       {% endblock %}
       {% block head_title %}
         <title>
-          {{ touglates.SITE_NAME }}{% if object.title %} : {{ object.title|safe  }}{% elif object.headline %} : {{ object.headline|safe  }}{% elif object.name %} : {{ object.name|safe }}{% endif %}
+          {% if touglates.APP_TITLE %}{{ touglates.APP_TITLE }}{% else %}{{ touglates.SITE_TITLE }}{% endif %}{% if object.title %} : {{ object.title|safe  }}{% elif object.headline %} : {{ object.headline|safe  }}{% elif object.name %} : {{ object.name|safe }}{% endif %}
         </title>
       {% endblock %}
       {% block head_stylesheet %}
