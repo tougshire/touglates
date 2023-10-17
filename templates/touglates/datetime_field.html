@@ -1,0 +1,15 @@
+{% include "django/forms/widgets/datetime.html" %}
+<script>
+  alert("test")
+    widget=document.getElementById('{{ widget.attrs.id|safe }}')
+    widget.type = "datetime-local"
+    button = document.createElement('button')
+    button.id = widget.id + '_button'
+    button.type = "button"
+    button.dataset.target = widget.id
+    button.innerText='Today'
+    widget.parentNode.insertBefore(button,widget.nextSibling)
+    button.addEventListener('click', function(e) {
+      document.getElementById(e.target.dataset.target).valueAsDate = new Date()
+    })
+</script>
