@@ -1,23 +1,14 @@
 {% include "django/forms/widgets/date.html" %}
 <script>
-  widget=document.getElementById('{{ widget.attrs.id|safe }}')
-  widget.type = "date"
-  reldates = document.createElement('select')
-  for( relname of [[0,"today"], [1,"tomorrow"], [7,"next week"]]) {
-    opt = document.createElement("option")
-    opt.value=relname[0]
-    opt.innerText=relname[1]
-    reldates.appendChild(opt)
-  }
-
-  reldates.id = widget.id + '_reldate'
-  reldates.dataset.target = widget.id
-  widget.parentNode.insertBefore(reldates,widget.nextSibling)
-  reldates.addEventListener('click', function(e) {
-    d = new Date()
-    console.log(reldates.value)
-    d.setDate(d.getDate() +  reldates.value)
-    document.getElementById(reldates.dataset.target).valueAsDate = d
-
-  })
+    widget=document.getElementById('{{ widget.attrs.id|safe }}')
+    widget.type = "date"
+    button = document.createElement('button')
+    button.id = widget.id + '_button'
+    button.type = "button"
+    button.dataset.target = widget.id
+    button.innerText='Today'
+    widget.parentNode.insertBefore(button,widget.nextSibling)
+    button.addEventListener('click', function(e) {
+      document.getElementById(e.target.dataset.target).valueAsDate = new Date()
+    })
 </script>
