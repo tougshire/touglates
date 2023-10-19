@@ -27,12 +27,9 @@
         </title>
       {% endblock %}
       {% block head_stylesheet %}
-        <link rel="stylesheet" href="{% static 'touglates/touglates.css' %}">
-        {% if touglates.COLORSCHEME %}
-          {% with touglates.COLORSCHEME as colorscheme %}
-            <link rel="stylesheet" href="{% static 'touglates/{{ COLORSCHEME }}.css">
-          {% endwith %}
-        {% endif %}
+        {% for stylesheet in touglates.STYLESHEETS %}
+          <link rel="stylesheet" href="{% static stylesheet %}">
+        {% endfor %}
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap" rel="stylesheet">
