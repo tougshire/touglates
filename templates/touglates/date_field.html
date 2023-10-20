@@ -1,14 +1,69 @@
 {% include "django/forms/widgets/date.html" %}
+
 <script>
-    widget=document.getElementById('{{ widget.attrs.id|safe }}')
-    widget.type = "date"
+
+  widget=document.getElementById('{{ widget.attrs.id|safe }}')
+  inp_due_date = document.getElementById('{{ widget.attrs.id }}')
+
+  {% if widget.buttons.all or widget.buttons.weeks or widget.buttons.increase_week or widget.buttons.increases %}
+    button = document.createElement('button')
+    button.type="button"
+    button.dataset.target = widget.id
+    button.dataset.days = "7"
+    button.classList.add("adjust-date")
+    button.innerHTML = '>>'
+    inp_due_date.parentNode.insertBefore(button, inp_due_date.nextSibling )
+  {% endif %}
+  {% if widget.buttons.all or widget.buttons.weeks or widget.buttons.decrease_week or widget.buttons.decreases %}
+    button = document.createElement('button')
+    button.type="button"
+    button.dataset.target = widget.id
+    button.dataset.days = "-7"
+    button.classList.add("adjust-date")
+    button.innerHTML = '<<'
+    inp_due_date.parentNode.insertBefore(button, inp_due_date )
+  {% endif %}
+  {% if widget.buttons.all or widget.buttons.days or widget.buttons.increase_day or widget.buttons.increases %}
+    button = document.createElement('button')
+    button.type="button"
+    button.dataset.target = widget.id
+    button.dataset.days = "1"
+    button.classList.add("adjust-date")
+    button.innerHTML = '>'
+    inp_due_date.parentNode.insertBefore(button, inp_due_date.nextSibling )
+  {% endif %}
+  {% if widget.buttons.all or widget.buttons.days or widget.buttons.decrease_day or widget.buttons.decreases %}
+    button = document.createElement('button')
+    button.type="button"
+    button.dataset.target = widget.id
+    button.dataset.days = "-1"
+    button.innerHTML = '<'
+    button.classList.add("adjust-date")
+    inp_due_date.parentNode.insertBefore(button, inp_due_date )
+  {% endif %}
+
+  {% if widget.buttons.all or widget.buttons.today %}
     button = document.createElement('button')
     button.id = widget.id + '_button'
     button.type = "button"
     button.dataset.target = widget.id
+    button.dataset.today = "true"
     button.innerText='Today'
+    button.classList.add("adjust-date")
     widget.parentNode.insertBefore(button,widget.nextSibling)
-    button.addEventListener('click', function(e) {
-      document.getElementById(e.target.dataset.target).valueAsDate = new Date()
+  {% endif %}
+
+  buttons = document.getElementsByClassName("adjust-date")
+
+  for(button of buttons) {
+
+    button.addEventListener("click", function(e){
+      e.preventDefault
+      if(e.target.dataset.today=="true") {
+        adjustDate(e.target.dataset.target, 0, true)
+      } else {
+        adjustDate(e.target.dataset.target, e.target.dataset.days)
+      }
     })
+  }
 </script>

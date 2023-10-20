@@ -315,10 +315,10 @@ function showNewFormsetForm(findClass, removeClass='_findClass', addClass='', ad
   }
 
 /*
-  Used in a form where inline formsets are hidden and the related 
+  Used in a form where inline formsets are hidden and the related
   objects are displayed with non-form elements
   When the user wants to edit one of the related objects, the user clicks on a button which
-  hides the non-form elements and displays the formset form 
+  hides the non-form elements and displays the formset form
 */
 
   function enableFormsetForm(formid, displayid) {
@@ -330,7 +330,7 @@ function showNewFormsetForm(findClass, removeClass='_findClass', addClass='', ad
 /*
   Used in a form where the extra formset forms are hidden.
   When the user wants to add a related object, the user clicks on a button which
-  displays a formset form 
+  displays a formset form
 */
 function enableAddFormsetForm(formclass) {
     let newforms = document.getElementsByClassName(formclass)
@@ -342,3 +342,15 @@ function enableAddFormsetForm(formclass) {
       alert('please save before adding more')
     }
   }
+
+function adjustDate(target_id,days=0,today=false) {
+    date_input = document.getElementById(target_id)
+    if(today){
+        newdate = new Date()
+        console.log(newdate)
+    } else {
+        newdate = new Date(date_input.value)
+    }
+    newdate.setDate(newdate.getDate() + Number(days))
+    date_input.valueAsDate = newdate
+}
