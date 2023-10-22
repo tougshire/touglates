@@ -1,7 +1,11 @@
-from django.forms.widgets import DateInput, DateTimeInput
+from django.forms import Select
+from django.forms.widgets import DateInput, DateTimeInput, ChoiceWidget
 
 
 class TouglateDateInput(DateInput):
+    template_name = "touglates/date_field.html"
+    media = {"js": "touglates/static/touglates.js"}
+
     def __init__(self, attrs={"type": "date"}, format=None, buttons={"all": "on"}):
         super().__init__(attrs, format)
 
@@ -28,10 +32,16 @@ class TouglateDateInput(DateInput):
         context["widget"]["buttons"] = self.buttons
         return context
 
-    media = {"js": "touglates/static/touglates.js"}
-    template_name = "touglates/date_field.html"
 
-
-class TouglateDateTimeInput(DateTimeInput):
+class TouglateRelatedSelect(Select):
+    template_name = "touglates/relatedselect_field.html"
     media = {"js": "touglates/static/touglates.js"}
-    template_name = "touglates/datetime_field.html"
+
+    def __init__(self, attrs=None, choices=(), related_data={}):
+        super().__init__(attrs, choices)
+        self.related_data = related_data
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        context["widget"]["related_data"] = self.related_data
+        return context

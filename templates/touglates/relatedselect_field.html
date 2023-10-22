@@ -1,0 +1,5 @@
+{% include "django/forms/widgets/select.html" %}
+
+<script>
+  addRelatedPopupButton( "{{ widget.attrs.id|safe }}", "{{ widget.related_data.model }}", "{{ widget.related_data.add_url }}", "{{ widget.related_data.edit_url }}"{% if widget.related_data.addlabel %}, "{{ widget.related_data.addlabel }}"{% endif %}{% if widget.related_data.editlabel %}, "{{ widget.related_data.editlabel }}"{% endif %} )
+</script>
