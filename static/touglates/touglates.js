@@ -55,6 +55,37 @@ function addFilterInput( selectId ) {
         select.parentNode.insertBefore(input, select.nextSibling)
     }
 }
+function addOptionFromRelatedPopup(optionValue, optionLabel, modelName, attrs=[]) {
+    let controls = document.querySelectorAll("[data-model='" + modelName + "']")
+    console.log("tp23anj11", modelName)
+    console.log("tp23anj13", "[data-model='" + modelName + "']")
+    for( control of controls ) {
+      console.log("tp23anj13", control)
+      let newOption = document.createElement('option')
+      newOption.value = optionValue
+      newOption.appendChild(document.createTextNode(optionLabel))
+      for(let attr of attrs){
+          newOption.setAttribute(attr.name, attr.value)
+      }
+      if( control.getAttribute('updateFrom' + modelName) > "" ) {
+        newOption.setAttribute('selected', 'SELECTED')
+        control.removeAttribute('updateFrom' + modelName)
+      }
+      if(control.options.length > 0) {
+        control.insertBefore(newOption, control.firstChild)
+        if(control.options.length > 1) {
+            if("" == control.options[1].value) {
+                nullOption = control.removeChild(control.options[1])
+                control.insertBefore(nullOption, control.firstChild)
+            }
+        }
+      } else {
+        control.appendChild(newOption)
+      }
+      control.dispatchEvent(new Event('change'))
+    }
+
+}
 
 function addOptionFromPopup(optionValue, optionLabel, modelName, attrs=[]) {
     let controlIds = getControlIdsForPopups(modelName)
@@ -66,7 +97,7 @@ function addOptionFromPopup(optionValue, optionLabel, modelName, attrs=[]) {
       for(let attr of attrs){
           newOption.setAttribute(attr.name, attr.value)
       }
-      if( control.getAttribute('updateFrom' + modelName) > "" ) {
+      if( control.getAttribute('selectAfterUpdate') > "" ) {
         newOption.setAttribute('selected', 'SELECTED')
         control.removeAttribute('updateFrom' + modelName)
       }
@@ -94,7 +125,8 @@ function addRelatedPopupButton( selectId, modelName, addUrl, editUrl='', addLabe
         button_add.appendChild(document.createTextNode(addLabel))
         button_add.addEventListener('click', function() {
             window.open( addUrl )
-            select.setAttribute('updateFrom' + modelName, 'True')
+            select.setAttribute('selectAfterUpdate', 'True')
+            select.dataset.model=modelName
         });
         select.parentNode.insertBefore(button_add, select.nextSibling)
         if( editUrl > '') {
