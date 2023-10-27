@@ -10,7 +10,7 @@ def popup_closer(request, app_name, model_name, pk):
     response_text = f"""
     <script>
         window.opener.addOptionFromRelatedPopup("{pk}","{label}","{model_name}")
-        /* window.close() */
+        window.close()
     </script>
     """
 
