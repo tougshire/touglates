@@ -351,7 +351,6 @@ function showNewFormsetForm(findClass, removeClass='_findClass', addClass='', ad
 */
 
   function enableFormsetForm(formid, displayid) {
-    let form = document.getElementById(formid)
     document.getElementById(formid).style.display="block"
     document.getElementById(displayid).style.display="none"
 }
