@@ -1,9 +1,3 @@
-if(window.opener) {
-    var ctrl_opener = document.getElementById('input_opener')
-    if( ctrl_opener != null ) {
-        ctrl_opener.value = window.opener.location.href
-    }
-}
 /*
 addFilterInput
 Adds a text box next to a select that can be used to filter the choices in the select
@@ -113,33 +107,27 @@ function addOptionFromPopup(optionValue, optionLabel, modelName, attrs=[]) {
     }
 }
 
-function addRelatedPopupButton( selectId, modelName, addUrl, editUrl='', addLabel='add', editLabel='edit' ) {
+function addRelatedPopupButton( selectId, modelName, addUrl, addLabel='add' ) {
     var select = document.getElementById(selectId)
     if( select != null ) {
         select.dataset.model=modelName
-        button_add = document.createElement('button')
+        select.setAttribute('selectAfterUpdate', 'True')
+        var button_add = document.createElement('button')
         button_add.type = 'button'
         button_add.id = 'btn_related_add_' + selectId
         button_add.appendChild(document.createTextNode(addLabel))
         button_add.addEventListener('click', function() {
-            window.open( addUrl )
-            select.setAttribute('selectAfterUpdate', 'True')
+            var popup=window.open( addUrl )
+            popup.addEventListener("load", function() {
+                var openerInput = this.document.createElement('input')
+                openerInput.type="hidden"
+                openerInput.id="id_opener"
+                openerInput.value=document.location.href
+                this.document.body.appendChild(openerInput)
+            })
         });
         select.parentNode.insertBefore(button_add, select.nextSibling)
-        if( editUrl > '') {
-            button_edit = document.createElement('button')
-            button_edit.type = 'button'
-            button_edit.id = 'btn_related_edit_' + selectId
-            button_edit.appendChild(document.createTextNode(editLabel))
-            button_edit.addEventListener('click', function() {
-                if(select.value > 0) {
-                editUrl = editUrl.replace('\/0\/', '/' + select.value + '/')
-                window.open( editUrl )
-                select.setAttribute('updateFrom' + modelName, 'True')
-                }
-            });
-        select.parentNode.insertBefore(button_edit, button_add.nextSibling)
-        }
+
     }
 }
 
@@ -310,3 +298,24 @@ function adjustDate(target_id,days=0,today=false) {
     newdate.setDate(newdate.getDate() + Number(days))
     date_input.valueAsDate = newdate
 }
+
+function activateFormsetButtons(relatedModelList) {
+    for(relatedModel of relatedModelList) {
+      let relatedModelEditButtons = document.getElementsByClassName(relatedModel + '_edit_button')
+      for( relatedModelEditButton of relatedModelEditButtons){
+        relatedModelEditButton.addEventListener('click', function(e){
+          e.preventDefault()
+          enableFormsetForm(e.target.dataset.formid, e.target.dataset.displayid)
+        })
+      }
+
+      document.getElementById('button_add' + relatedModel).addEventListener('click', function(e){
+        e.preventDefault()
+        enableAddFormsetForm(e.target.dataset["newform"])
+      })
+      let relatedModelforms = document.getElementsByClassName(relatedModel + 'formsetform')
+      for( relatedModelform of relatedModelforms ){
+        relatedModelform.style.display="none"
+      }
+    }
+  }
