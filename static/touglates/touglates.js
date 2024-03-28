@@ -118,13 +118,13 @@ function addRelatedPopupButton( selectId, modelName, addUrl, addLabel='add' ) {
         button_add.appendChild(document.createTextNode(addLabel))
         button_add.addEventListener('click', function() {
             var popup=window.open( addUrl )
-            popup.addEventListener("load", function() {
+/*            popup.addEventListener("load", function() {
                 var openerInput = this.document.createElement('input')
                 openerInput.type="hidden"
                 openerInput.id="id_opener"
                 openerInput.value=document.location.href
                 this.document.body.appendChild(openerInput)
-            })
+            }) */
         });
         select.parentNode.insertBefore(button_add, select.nextSibling)
 
