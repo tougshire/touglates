@@ -1,5 +1,5 @@
 from django.forms import Select
-from django.forms.widgets import DateInput, DateTimeInput, ChoiceWidget
+from django.forms.widgets import DateInput, DateTimeInput, ChoiceWidget, SelectMultiple
 
 
 class TouglateDateInput(DateInput):
@@ -13,9 +13,7 @@ class TouglateDateInput(DateInput):
             buttonlist = (
                 [buttons]
                 if type(buttons) == str
-                else buttons
-                if type(buttons) == list or type(buttons) == tuple
-                else ()
+                else buttons if type(buttons) == list or type(buttons) == tuple else ()
             )
             buttons = {}
             for buttonkey in buttonlist:
@@ -45,3 +43,7 @@ class TouglateRelatedSelect(Select):
         context = super().get_context(name, value, attrs)
         context["widget"]["related_data"] = self.related_data
         return context
+
+
+class DropdownSelectMultiple(SelectMultiple):
+    template_name = "touglates/dropdown_select.html"
