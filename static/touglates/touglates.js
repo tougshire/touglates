@@ -58,7 +58,9 @@ function addOptionFromRelatedPopup(optionValue, optionLabel, modelName, attrs=[]
       for(let attr of attrs){
           newOption.setAttribute(attr.name, attr.value)
       }
-      if( control.getAttribute('selectAfterUpdate') ) {
+      if( control.getAttribute('selectAfterUpdate') !== null ) {
+        alert("tp2441c20 " + "setting SELECTED for " + control.id)
+        alert("tp2441c21 " + control.getAttribute('selectAfterUpdate'))
         newOption.setAttribute('selected', 'SELECTED')
         control.removeAttribute('selectAfterUpdate')
       }
@@ -78,53 +80,46 @@ function addOptionFromRelatedPopup(optionValue, optionLabel, modelName, attrs=[]
 
 }
 
-function addOptionFromPopup(optionValue, optionLabel, modelName, attrs=[]) {
-    let controlIds = getControlIdsForPopups(modelName)
-    for( controlId of controlIds ) {
-      let control = document.getElementById(controlId)
-      let newOption = document.createElement('option')
-      newOption.value = optionValue
-      newOption.appendChild(document.createTextNode(optionLabel))
-      for(let attr of attrs){
-          newOption.setAttribute(attr.name, attr.value)
-      }
-      if( control.getAttribute('selectAfterUpdate') > "" ) {
-        newOption.setAttribute('selected', 'SELECTED')
-        control.removeAttribute('updateFrom' + modelName)
-      }
-      if(control.options.length > 0) {
-        control.insertBefore(newOption, control.firstChild)
-        if(control.options.length > 1) {
-            if("" == control.options[1].value) {
-                nullOption = control.removeChild(control.options[1])
-                control.insertBefore(nullOption, control.firstChild)
-            }
-        }
-      } else {
-        control.appendChild(newOption)
-      }
-      control.dispatchEvent(new Event('change'))
-    }
-}
+// function addOptionFromPopup(optionValue, optionLabel, modelName, attrs=[]) {
+//     let controlIds = getControlIdsForPopups(modelName)
+//     for( controlId of controlIds ) {
+//       let control = document.getElementById(controlId)
+//       let newOption = document.createElement('option')
+//       newOption.value = optionValue
+//       newOption.appendChild(document.createTextNode(optionLabel))
+//       for(let attr of attrs){
+//           newOption.setAttribute(attr.name, attr.value)
+//       }
+//       if( control.getAttribute('selectAfterUpdate') > "" ) {
+//         newOption.setAttribute('selected', 'SELECTED')
+//         control.removeAttribute('updateFrom' + modelName)
+//       }
+//       if(control.options.length > 0) {
+//         control.insertBefore(newOption, control.firstChild)
+//         if(control.options.length > 1) {
+//             if("" == control.options[1].value) {
+//                 nullOption = control.removeChild(control.options[1])
+//                 control.insertBefore(nullOption, control.firstChild)
+//             }
+//         }
+//       } else {
+//         control.appendChild(newOption)
+//       }
+//       control.dispatchEvent(new Event('change'))
+//     }
+// }
 
 function addRelatedPopupButton( selectId, modelName, addUrl, addLabel='add' ) {
     var select = document.getElementById(selectId)
     if( select != null ) {
         select.dataset.model=modelName
-        select.setAttribute('selectAfterUpdate', 'True')
         var button_add = document.createElement('button')
         button_add.type = 'button'
         button_add.id = 'btn_related_add_' + selectId
         button_add.appendChild(document.createTextNode(addLabel))
         button_add.addEventListener('click', function() {
+            select.setAttribute('selectAfterUpdate', 'True')
             var popup=window.open( addUrl )
-/*            popup.addEventListener("load", function() {
-                var openerInput = this.document.createElement('input')
-                openerInput.type="hidden"
-                openerInput.id="id_opener"
-                openerInput.value=document.location.href
-                this.document.body.appendChild(openerInput)
-            }) */
         });
         select.parentNode.insertBefore(button_add, select.nextSibling)
 
