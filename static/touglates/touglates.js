@@ -314,3 +314,15 @@ function activateFormsetButtons(relatedModelList) {
       }
     }
   }
+
+function initSlugField( slugFieldId, slugIdFrag, inputIdFrag ) {
+    let slugField=document.getElementById(slugFieldId)
+    let inputField=document.getElementById(slugFieldId.replace(slugIdFrag, inputFragId))
+    if (slugField !== null && inputField !== null ) {
+        inputField.addEventListener("change", function() {
+        if(slugField.value == "" ) {
+            slugField.value=inputField.value.replace(/[ _]+/g, '-').toLowerCase();
+        }
+        })
+    }
+}
