@@ -326,3 +326,7 @@ function initSlugField( slugFieldId, slugIdFrag, inputIdFrag ) {
         })
     }
 }
+
+function honeypotHelpPopup() {
+    alert("If any value is entered, the form will be rejected.  This is here to check for automated submissions. ")
+}

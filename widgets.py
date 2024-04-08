@@ -1,4 +1,4 @@
-from django.forms import Select
+from django.forms import Select, ValidationError
 from django.forms.widgets import (
     DateInput,
     DateTimeInput,
@@ -78,3 +78,39 @@ class SlugInput(TextInput):
         context["widget"]["slug_name"] = self.slug_name
 
         return context
+
+
+class HoneypotField(TextInput):
+    template_name = "touglates/honypot_field.html"
+
+    def __init__(
+        self,
+        attrs=None,
+        honeypot_name="father_maiden_mame",
+        honeypot_label="Father's Maiden Name",
+        honeypot_help_text="Your Father's Maiden Name",
+        *args,
+        **kwargs,
+    ):
+        kwargs["required"] = False
+
+        super().__init__(
+            attrs,
+        )
+        self.honypot_name = honeypot_name
+        self.honypot_label = honeypot_label
+        self.honypot_help_text = honeypot_help_text
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        context["widget"]["honeypot_name"] = self.honeypot_name
+        context["widget"]["honeypot_label"] = self.honeypot_label
+        context["widget"]["honeypot_help_text"] = self.honeypot_help_text
+
+        return context
+
+    def clean(self, value):
+        if cleaned_value := super().clean(value):
+            raise ValidationError("")
+        else:
+            return cleaned_value
