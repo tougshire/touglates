@@ -312,3 +312,19 @@ function activateFormsetButtons(relatedModelList) {
       }
     }
   }
+
+function initSlugField( slugFieldId, slugIdFrag, inputIdFrag ) {
+    let slugField=document.getElementById(slugFieldId)
+    let inputField=document.getElementById(slugFieldId.replace(slugIdFrag, inputIdFrag))
+    if (slugField !== null && inputField !== null ) {
+        inputField.addEventListener("change", function() {
+        if(slugField.value == "" ) {
+            slugField.value=inputField.value.replace(/[ _]+/g, '-').toLowerCase();
+        }
+        })
+    }
+}
+
+function honeypotHelpPopup() {
+    alert("If any value is entered, the form will be rejected.  This is here to check for automated submissions. ")
+}

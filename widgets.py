@@ -1,10 +1,18 @@
-from django.forms import Select
-from django.forms.widgets import DateInput, DateTimeInput, ChoiceWidget, SelectMultiple
+from django.forms import Select, ValidationError
+from django.forms.widgets import (
+    DateInput,
+    DateTimeInput,
+    ChoiceWidget,
+    SelectMultiple,
+    TextInput,
+)
 
 
 class TouglateDateInput(DateInput):
     template_name = "touglates/date_field.html"
-    media = {"js": "touglates/static/touglates.js"}
+
+    class Media:
+        js = ("touglates/touglates.js",)
 
     def __init__(self, attrs={"type": "date"}, format=None, buttons={"all": "on"}):
         super().__init__(attrs, format)
@@ -33,7 +41,9 @@ class TouglateDateInput(DateInput):
 
 class TouglateRelatedSelect(Select):
     template_name = "touglates/relatedselect_field.html"
-    media = {"js": "touglates/static/touglates.js"}
+
+    class Media:
+        js = ("touglates/touglates.js",)
 
     def __init__(self, attrs=None, choices=(), related_data={}):
         super().__init__(attrs, choices)
@@ -47,3 +57,60 @@ class TouglateRelatedSelect(Select):
 
 class DropdownSelectMultiple(SelectMultiple):
     template_name = "touglates/dropdown_select.html"
+
+
+class SlugInput(TextInput):
+    template_name = "touglates/slug_field.html"
+
+    class Media:
+        js = ("touglates/touglates.js",)
+
+    def __init__(self, attrs=None, slug_name="", input_name=""):
+        super().__init__(
+            attrs,
+        )
+        self.input_name = input_name
+        self.slug_name = slug_name
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        context["widget"]["input_name"] = self.input_name
+        context["widget"]["slug_name"] = self.slug_name
+
+        return context
+
+
+class HoneypotField(TextInput):
+    template_name = "touglates/honypot_field.html"
+
+    def __init__(
+        self,
+        attrs=None,
+        honeypot_name="father_maiden_mame",
+        honeypot_label="Father's Maiden Name",
+        honeypot_help_text="Your Father's Maiden Name",
+        *args,
+        **kwargs,
+    ):
+        kwargs["required"] = False
+
+        super().__init__(
+            attrs,
+        )
+        self.honypot_name = honeypot_name
+        self.honypot_label = honeypot_label
+        self.honypot_help_text = honeypot_help_text
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        context["widget"]["honeypot_name"] = self.honeypot_name
+        context["widget"]["honeypot_label"] = self.honeypot_label
+        context["widget"]["honeypot_help_text"] = self.honeypot_help_text
+
+        return context
+
+    def clean(self, value):
+        if cleaned_value := super().clean(value):
+            raise ValidationError("")
+        else:
+            return cleaned_value

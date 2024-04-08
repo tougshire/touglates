@@ -1,0 +1,5 @@
+{% include "django/forms/widgets/input.html" %}
+
+<script>
+  initSlugField( "{{ widget.attrs.id|safe }}", "{{ widget.slug_name }}", "{{ widget.input_name }}" )
+</script>
