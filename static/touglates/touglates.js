@@ -107,7 +107,7 @@ function addOptionFromRelatedPopup(optionValue, optionLabel, modelName, attrs=[]
 //     }
 // }
 
-function addRelatedPopupButton( selectId, modelName, addUrl, addLabel='add' ) {
+function addRelatedPopupButton( selectId, modelName, addUrl, addLabel='new' ) {
     var select = document.getElementById(selectId)
     if( select != null ) {
         select.dataset.model=modelName
