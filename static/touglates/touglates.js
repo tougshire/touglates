@@ -59,8 +59,6 @@ function addOptionFromRelatedPopup(optionValue, optionLabel, modelName, attrs=[]
           newOption.setAttribute(attr.name, attr.value)
       }
       if( control.getAttribute('selectAfterUpdate') !== null ) {
-        alert("tp2441c20 " + "setting SELECTED for " + control.id)
-        alert("tp2441c21 " + control.getAttribute('selectAfterUpdate'))
         newOption.setAttribute('selected', 'SELECTED')
         control.removeAttribute('selectAfterUpdate')
       }
@@ -109,7 +107,7 @@ function addOptionFromRelatedPopup(optionValue, optionLabel, modelName, attrs=[]
 //     }
 // }
 
-function addRelatedPopupButton( selectId, modelName, addUrl, addLabel='add' ) {
+function addRelatedPopupButton( selectId, modelName, addUrl, addLabel='new' ) {
     var select = document.getElementById(selectId)
     if( select != null ) {
         select.dataset.model=modelName

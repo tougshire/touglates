@@ -46,13 +46,15 @@ class TouglateRelatedSelect(Select):
     class Media:
         js = ("touglates/touglates.js",)
 
-    def __init__(self, attrs=None, choices=(), related_data={}):
+    def __init__(self, attrs=None, choices=(), related_data={}, add_filter_input=""):
         super().__init__(attrs, choices)
         self.related_data = related_data
+        self.add_filter_input = add_filter_input
 
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
         context["widget"]["related_data"] = self.related_data
+        context["widget"]["add_filter_input"] = self.add_filter_input
         return context
 
 
