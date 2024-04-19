@@ -1,33 +1,38 @@
 
-<div id="div_display_{{ widget.attrs.id }}">
   <input id="display_{{ widget.attrs.id }}">
-</div>
-<div id="div_select_{{ widget.attrs.id }}">
+  <br id="br_{{ widget.attrs.id }}">
   <select name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>{% for group_name, group_choices, group_index in widget.optgroups %}{% if group_name %}
     <optgroup label="{{ group_name }}">{% endif %}{% for widget in group_choices %}
     {% include widget.template_name %}{% endfor %}{% if group_name %}
     </optgroup>{% endif %}{% endfor %}
   </select>
-</div>
 
 <script>
   var select_{{ widget.attrs.id }} = document.getElementById("{{ widget.attrs.id }}")
-  var div_select_{{ widget.attrs.id }} = document.getElementById("div_select_{{ widget.attrs.id }}")
+
+  var br_{{ widget.attrs.id }} = document.getElementById("br_{{ widget.attrs.id }}")
   var display_{{ widget.attrs.id }} = document.getElementById("display_{{ widget.attrs.id }}")
-  var div_display_{{ widget.attrs.id }} = document.getElementById("div_display_{{ widget.attrs.id }}")
 
   var {{ widget.attrs.id }}_initial_display = select_{{ widget.attrs.id }}.style.display
+  var br_{{ widget.attrs.id }}_initial_display = br_{{ widget.attrs.id }}.style.display
 
   function showHide_{{ widget.attrs.id }}(forceaction="") {
     if( forceaction == "hide") {
       select_{{ widget.attrs.id }}.style.display = "none"
+      br_{{ widget.attrs.id }}.style.display = "none"
+
     } else if ( forceaction=="show"){
       select_{{ widget.attrs.id }}.style.display = {{ widget.attrs.id }}_initial_display
+      br_{{ widget.attrs.id }}.style.display = br_{{ widget.attrs.id }}_initial_display
+
     } else {
       if(select_{{ widget.attrs.id }}.style.display == "none") {
         select_{{ widget.attrs.id }}.style.display = {{ widget.attrs.id }}_initial_display
+        br_{{ widget.attrs.id }}.style.display = br_{{ widget.attrs.id }}_initial_display
+
       } else {
         select_{{ widget.attrs.id }}.style.display = "none"
+        br_{{ widget.attrs.id }}.style.display = "none"
       }
     }
   }
@@ -71,9 +76,6 @@
   display_{{ widget.attrs.id }}.addEventListener("keydown", function(){
     filter_{{ widget.attrs.id }}()
   })
-  /* display_{{ widget.attrs.id }}.addEventListener("focusout", function(){
-    clearfilter_{{ widget.attrs.id }}()
-  }) */
   display_{{ widget.attrs.id }}.addEventListener("focusin", function(){
     display_{{ widget.attrs.id }}.value=""
   })
