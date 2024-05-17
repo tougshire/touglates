@@ -31,20 +31,24 @@
         br_{{ widget.attrs.id }}.style.display = br_{{ widget.attrs.id }}_initial_display
 
       } else {
+        console.log("tp245gk49")
+
         select_{{ widget.attrs.id }}.style.display = "none"
         br_{{ widget.attrs.id }}.style.display = "none"
+        update_{{ widget.attrs.id }}()
       }
     }
   }
   function update_{{ widget.attrs.id }}() {
     display_{{ widget.attrs.id }}.value = ""
+    console.log("tp245gk55" + ": " + select_{{ widget.attrs.id }}.options.length)
     for(p=0; p < select_{{ widget.attrs.id }}.options.length; p++ ) {
       if(select_{{ widget.attrs.id }}.options[p].selected ) {
         display_{{ widget.attrs.id }}.value = display_{{ widget.attrs.id }}.value + select_{{ widget.attrs.id }}.options[p].innerText + ","
       }
     }
   }
-  function filter_{{ widget.attrs.id }}() {
+  function showdropdown_{{ widget.attrs.id }}() {
     if (typeof( filtertimer_{{ widget.attrs.id }}) !==undefined) {
       clearTimeout(filtertimer_{{ widget.attrs.id }})
     }
@@ -61,8 +65,8 @@
     }
     }, 10);
   }
-  function clearfilter_{{ widget.attrs.id }}() {
-    var clearfiltertimer_{{ widget.attrs.id }} = setTimeout(function() {
+  function hidedropdown_{{ widget.attrs.id }}() {
+    var hidedropdowntimer_{{ widget.attrs.id }} = setTimeout(function() {
       showHide_{{ widget.attrs.id }}("hide")
       for(p=0; p < select_{{ widget.attrs.id }}.options.length; p++ ) {
         select_{{ widget.attrs.id }}.options[p].style.display="block"
@@ -74,7 +78,7 @@
     showHide_{{ widget.attrs.id }}()
   })
   display_{{ widget.attrs.id }}.addEventListener("keydown", function(){
-    filter_{{ widget.attrs.id }}()
+    showdropdown_{{ widget.attrs.id }}()
   })
   display_{{ widget.attrs.id }}.addEventListener("focusin", function(){
     display_{{ widget.attrs.id }}.value=""
