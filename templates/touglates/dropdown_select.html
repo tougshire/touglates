@@ -1,4 +1,5 @@
 
+  {% load static %}
   <input id="display_{{ widget.attrs.id }}">
   <br id="br_{{ widget.attrs.id }}">
   <select name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>{% for group_name, group_choices, group_index in widget.optgroups %}{% if group_name %}
@@ -6,12 +7,16 @@
     {% include widget.template_name %}{% endfor %}{% if group_name %}
     </optgroup>{% endif %}{% endfor %}
   </select>
+  <button id="clear_{{ widget.attrs.id }}"><img src="{% static 'touglates/clear_icon.ico' %}" style="height:.8em;" title="clear" alt_text="clear"></button>
 
 <script>
   var select_{{ widget.attrs.id }} = document.getElementById("{{ widget.attrs.id }}")
 
   var br_{{ widget.attrs.id }} = document.getElementById("br_{{ widget.attrs.id }}")
   var display_{{ widget.attrs.id }} = document.getElementById("display_{{ widget.attrs.id }}")
+
+  var clear_{{ widget.attrs.id }} = document.getElementById("clear_{{ widget.attrs.id }}")
+
 
   var {{ widget.attrs.id }}_initial_display = select_{{ widget.attrs.id }}.style.display
   var br_{{ widget.attrs.id }}_initial_display = br_{{ widget.attrs.id }}.style.display
@@ -74,6 +79,12 @@
       update_{{ widget.attrs.id }}()
     }, 100);
   }
+  function clearselections_{{ widget.attrs.id }}() {
+    for(p=0; p < select_{{ widget.attrs.id }}.options.length; p++ ) {
+        select_{{ widget.attrs.id }}.options[p].selected=false
+      }
+      update_{{ widget.attrs.id }}()
+  }
   display_{{ widget.attrs.id }}.addEventListener("click", function(){
     showHide_{{ widget.attrs.id }}()
   })
@@ -89,7 +100,17 @@
   select_{{ widget.attrs.id }}.addEventListener("click", function(){
     update_{{ widget.attrs.id }}()
   })
+  clear_{{ widget.attrs.id }}.addEventListener("click", function(e){
+    e.preventDefault()
+    clearselections_{{ widget.attrs.id }}()
+  })
+
+
+
+
   update_{{ widget.attrs.id }}()
   showHide_{{ widget.attrs.id }}("hide")
+
+
 
 </script>
