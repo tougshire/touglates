@@ -337,8 +337,26 @@ function intiateDropdown( widgetAttrsId ) {
 
     select.dataset['initial_display'] = select.style.display
     br.dataset['initial_display'] = br.style.display
-    console.log(select.dataset['initial_display'])
-    console.log(br.dataset['initial_display'])
+
+    display.addEventListener("click", function(){
+        showHide( widgetAttrsId )
+      })
+      display.addEventListener("keydown", function(){
+        showdropdown( widgetAttrsId )
+      })
+      display.addEventListener("focusin", function(){
+        updateDisplay( widgetAttrsId )
+      })
+      selec.addEventListener("change", function(){
+        updateDisplay( widgetAttrsId )
+      })
+      select.addEventListener("click", function(){
+        updateDisplay( widgetAttrsId )
+      })
+      clear.addEventListener("click", function(e){
+        e.preventDefault()
+        clearselections( widgetAttrsId )
+      })
 
 }
 

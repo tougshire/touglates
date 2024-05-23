@@ -20,25 +20,6 @@
 
   intiateDropdown( "{{ widget.attrs.id }}" )
 
-  display_{{ widget.attrs.id }}.addEventListener("click", function(){
-    showHide( "{{ widget.attrs.id }}" )
-  })
-  display_{{ widget.attrs.id }}.addEventListener("keydown", function(){
-    showdropdown( "{{ widget.attrs.id }}" )
-  })
-  display_{{ widget.attrs.id }}.addEventListener("focusin", function(){
-    display_{{ widget.attrs.id }}.value=""
-  })
-  select_{{ widget.attrs.id }}.addEventListener("change", function(){
-    updateDisplay( "{{ widget.attrs.id }}" )
-  })
-  select_{{ widget.attrs.id }}.addEventListener("click", function(){
-    updateDisplay( "{{ widget.attrs.id }}" )
-  })
-  clear_{{ widget.attrs.id }}.addEventListener("click", function(e){
-    e.preventDefault()
-    clearselections( "{{ widget.attrs.id }}" )
-  })
 
   updateDisplay( "{{ widget.attrs.id }}" )
   showHide( "{{ widget.attrs.id }}", "hide")
