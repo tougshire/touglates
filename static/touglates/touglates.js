@@ -285,7 +285,6 @@ function adjustDate(target_id,days=0,today=false) {
     date_input = document.getElementById(target_id)
     if(today){
         newdate = new Date()
-        console.log(newdate)
     } else {
         newdate = new Date(date_input.value)
     }
@@ -329,3 +328,112 @@ function initSlugField( slugFieldId, slugIdFrag, inputIdFrag ) {
 function honeypotHelpPopup() {
     alert("If any value is entered, the form will be rejected.  This is here to check for automated submissions. ")
 }
+
+function intiateDropdown( widgetAttrsId ) {
+    var select = document.getElementById( widgetAttrsId )
+    var br = document.getElementById("br_" + widgetAttrsId)
+    var display = document.getElementById("display_" + widgetAttrsId)
+    var clear = document.getElementById("clear_" + widgetAttrsId)
+
+    select.dataset['initial_display'] = select.style.display
+    br.dataset['initial_display'] = br.style.display
+    console.log(select.dataset['initial_display'])
+    console.log(br.dataset['initial_display'])
+
+}
+
+  function showHide( widgetAttrsId, forceaction="") {
+    var select = document.getElementById( widgetAttrsId )
+    var br = document.getElementById("br_" + widgetAttrsId )
+    var display = document.getElementById("display_" + widgetAttrsId )
+    var clear = document.getElementById("clear_" + widgetAttrsId )
+
+    if( forceaction == "hide") {
+      select.style.display = "none"
+      br.style.display = "none"
+
+    } else if ( forceaction=="show"){
+        console.log("245ne07")
+        console.log(select.dataset['initial_display'])
+      select.style.display = select.dataset['initial_display']
+      br.style.display = br.dataset['initial_display']
+
+    } else {
+      if(select.style.display == "none") {
+        select.style.display = select.dataset['initial_display']
+        br.style.display = br.dataset['initial_display']
+
+      } else {
+
+        select.style.display = "none"
+        br.style.display = "none"
+        updateSelect("{{ widget.attrs.id }}")
+      }
+    }
+  }
+
+  function updateDisplay( widgetAttrsId ) {
+    var select = document.getElementById( widgetAttrsId )
+    var br = document.getElementById("br_" + widgetAttrsId )
+    var display = document.getElementById("display_" + widgetAttrsId )
+    var clear = document.getElementById("clear_" + widgetAttrsId )
+
+    display.value = ""
+    for(p=0; p < select.options.length; p++ ) {
+      if(select.options[p].selected ) {
+        display.value = display.value + select.options[p].innerText + ","
+      }
+    }
+  }
+  var filtertimer = {}
+  var hidedropdowntimer = {}
+
+  function showdropdown( widgetAttrsId ) {
+    var select = document.getElementById( widgetAttrsId )
+    var br = document.getElementById("br_" + widgetAttrsId )
+    var display = document.getElementById("display_" + widgetAttrsId )
+    var clear = document.getElementById("clear_" + widgetAttrsId )
+
+    if (typeof( filtertimer[ widgetAttrsId ]) !== undefined ) {
+      clearTimeout(filtertimer[ widgetAttrsId ])
+    }
+    filtertimer["widgetAttrsId"] = setTimeout(function() {
+      showHide( widgetAttrsId, "show")
+      val = display.value.toLowerCase()
+      for(p=0; p < select.options.length; p++ ) {
+        var op = select.options[p]
+        if( op.innerText.toLowerCase().indexOf(val) > -1 ) {
+            op.style.display="block"
+        } else {
+            op.style.display="none"
+        }
+      }
+    }, 10);
+  }
+
+  function hidedropdown( widgetAttrsId ) {
+    var select = document.getElementById( widgetAttrsId )
+    var br = document.getElementById("br_" + widget.attrs.id )
+    var display = document.getElementById("display_" + widget.attrs.id )
+    var clear = document.getElementById("clear_" + widget.attrs.id )
+
+
+    hidedropdowntimer[ widgetAttrsId ] = setTimeout(function() {
+      showHide(widget.attrs.id, "hide")
+      for(p=0; p < select.options.length; p++ ) {
+        select.options[p].style.display="block"
+      }
+      updateDisplay(widget.attrs.id)
+    }, 100);
+  }
+  function clearselections( widgetAttrsId ) {
+    var select = document.getElementById( widgetAttrsId )
+    var br = document.getElementById("br_" + widget.attrs.id )
+    var display = document.getElementById("display_" + widget.attrs.id )
+    var clear = document.getElementById("clear_" + widget.attrs.id )
+
+    for(p=0; p < select.options.length; p++ ) {
+        select.options[p].selected=false
+      }
+      updateDisplay( widgetAttrsId)
+  }

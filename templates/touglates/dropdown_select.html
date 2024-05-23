@@ -10,106 +10,38 @@
   <button id="clear_{{ widget.attrs.id }}"><img src="{% static 'touglates/clear_icon.ico' %}" style="height:.8em;" title="clear" alt_text="clear"></button>
 
 <script>
-  var select_{{ widget.attrs.id }} = document.getElementById("{{ widget.attrs.id }}")
 
+  var select_{{ widget.attrs.id }} = document.getElementById("{{ widget.attrs.id }}")
   var br_{{ widget.attrs.id }} = document.getElementById("br_{{ widget.attrs.id }}")
   var display_{{ widget.attrs.id }} = document.getElementById("display_{{ widget.attrs.id }}")
-
   var clear_{{ widget.attrs.id }} = document.getElementById("clear_{{ widget.attrs.id }}")
-
-
   var {{ widget.attrs.id }}_initial_display = select_{{ widget.attrs.id }}.style.display
   var br_{{ widget.attrs.id }}_initial_display = br_{{ widget.attrs.id }}.style.display
 
-  function showHide_{{ widget.attrs.id }}(forceaction="") {
-    if( forceaction == "hide") {
-      select_{{ widget.attrs.id }}.style.display = "none"
-      br_{{ widget.attrs.id }}.style.display = "none"
+  intiateDropdown( "{{ widget.attrs.id }}" )
 
-    } else if ( forceaction=="show"){
-      select_{{ widget.attrs.id }}.style.display = {{ widget.attrs.id }}_initial_display
-      br_{{ widget.attrs.id }}.style.display = br_{{ widget.attrs.id }}_initial_display
-
-    } else {
-      if(select_{{ widget.attrs.id }}.style.display == "none") {
-        select_{{ widget.attrs.id }}.style.display = {{ widget.attrs.id }}_initial_display
-        br_{{ widget.attrs.id }}.style.display = br_{{ widget.attrs.id }}_initial_display
-
-      } else {
-        console.log("tp245gk49")
-
-        select_{{ widget.attrs.id }}.style.display = "none"
-        br_{{ widget.attrs.id }}.style.display = "none"
-        update_{{ widget.attrs.id }}()
-      }
-    }
-  }
-  function update_{{ widget.attrs.id }}() {
-    display_{{ widget.attrs.id }}.value = ""
-    console.log("tp245gk55" + ": " + select_{{ widget.attrs.id }}.options.length)
-    for(p=0; p < select_{{ widget.attrs.id }}.options.length; p++ ) {
-      if(select_{{ widget.attrs.id }}.options[p].selected ) {
-        display_{{ widget.attrs.id }}.value = display_{{ widget.attrs.id }}.value + select_{{ widget.attrs.id }}.options[p].innerText + ","
-      }
-    }
-  }
-  function showdropdown_{{ widget.attrs.id }}() {
-    if (typeof( filtertimer_{{ widget.attrs.id }}) !==undefined) {
-      clearTimeout(filtertimer_{{ widget.attrs.id }})
-    }
-    var filtertimer_{{ widget.attrs.id }} = setTimeout(function() {
-      showHide_{{ widget.attrs.id }}("show")
-      val = display_{{ widget.attrs.id }}.value.toLowerCase()
-      for(p=0; p < select_{{ widget.attrs.id }}.options.length; p++ ) {
-      var op = select_{{ widget.attrs.id }}.options[p]
-      if( op.innerText.toLowerCase().indexOf(val) > -1 ) {
-        op.style.display="block"
-      } else {
-        op.style.display="none"
-      }
-    }
-    }, 10);
-  }
-  function hidedropdown_{{ widget.attrs.id }}() {
-    var hidedropdowntimer_{{ widget.attrs.id }} = setTimeout(function() {
-      showHide_{{ widget.attrs.id }}("hide")
-      for(p=0; p < select_{{ widget.attrs.id }}.options.length; p++ ) {
-        select_{{ widget.attrs.id }}.options[p].style.display="block"
-      }
-      update_{{ widget.attrs.id }}()
-    }, 100);
-  }
-  function clearselections_{{ widget.attrs.id }}() {
-    for(p=0; p < select_{{ widget.attrs.id }}.options.length; p++ ) {
-        select_{{ widget.attrs.id }}.options[p].selected=false
-      }
-      update_{{ widget.attrs.id }}()
-  }
   display_{{ widget.attrs.id }}.addEventListener("click", function(){
-    showHide_{{ widget.attrs.id }}()
+    showHide( "{{ widget.attrs.id }}" )
   })
   display_{{ widget.attrs.id }}.addEventListener("keydown", function(){
-    showdropdown_{{ widget.attrs.id }}()
+    showdropdown( "{{ widget.attrs.id }}" )
   })
   display_{{ widget.attrs.id }}.addEventListener("focusin", function(){
     display_{{ widget.attrs.id }}.value=""
   })
   select_{{ widget.attrs.id }}.addEventListener("change", function(){
-    update_{{ widget.attrs.id }}()
+    updateDisplay( "{{ widget.attrs.id }}" )
   })
   select_{{ widget.attrs.id }}.addEventListener("click", function(){
-    update_{{ widget.attrs.id }}()
+    updateDisplay( "{{ widget.attrs.id }}" )
   })
   clear_{{ widget.attrs.id }}.addEventListener("click", function(e){
     e.preventDefault()
-    clearselections_{{ widget.attrs.id }}()
+    clearselections( "{{ widget.attrs.id }}" )
   })
 
-
-
-
-  update_{{ widget.attrs.id }}()
-  showHide_{{ widget.attrs.id }}("hide")
+  updateDisplay( "{{ widget.attrs.id }}" )
+  showHide( "{{ widget.attrs.id }}", "hide")
 
 
 
