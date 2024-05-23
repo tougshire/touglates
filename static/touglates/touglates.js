@@ -367,7 +367,7 @@ function intiateDropdown( widgetAttrsId ) {
 
         select.style.display = "none"
         br.style.display = "none"
-        updateSelect("{{ widget.attrs.id }}")
+        updateDisplay( widgetAttrsId )
       }
     }
   }
