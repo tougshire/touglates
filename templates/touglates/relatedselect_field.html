@@ -1,8 +1,11 @@
+{% load static %}
 {% include "django/forms/widgets/select.html" %}
 
+{% if widget.related_data.doadd %}
 <script>
-  addRelatedPopupButton( "{{ widget.attrs.id|safe }}", "{{ widget.related_data.model }}", "{{ widget.related_data.add_url }}", {% if widget.related_data.addlabel %}, "{{ widget.related_data.addlabel }}"{% endif %} )
+  addRelatedPopupLink( "{{ widget.attrs.id|safe }}", "{{ widget.related_data.model }}", "{{ widget.related_data.add_url }}"{% if widget.related_data.addlabel %}, "{{ widget.related_data.addlabel }}"{% else %},"Add"{% endif %}{% if widget.related_data.addicon %},"{{ widget.related_data.addicon }}"{% else %},"{% static 'admin/img/icon-addlink.svg' %}"{% endif %} )
   if("{{ widget.add_filter_input }}".toLowerCase() == "true" ) {
     addFilterInput("{{ widget.attrs.id|safe }}")
   }
 </script>
+{% endif %}

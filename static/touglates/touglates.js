@@ -49,6 +49,7 @@ function addFilterInput( selectId ) {
         select.parentNode.insertBefore(input, select.nextSibling)
     }
 }
+
 function addOptionFromRelatedPopup(optionValue, optionLabel, modelName, attrs=[]) {
     let controls = document.querySelectorAll("[data-model='" + modelName + "']")
     for( control of controls ) {
@@ -78,42 +79,19 @@ function addOptionFromRelatedPopup(optionValue, optionLabel, modelName, attrs=[]
 
 }
 
-// function addOptionFromPopup(optionValue, optionLabel, modelName, attrs=[]) {
-//     let controlIds = getControlIdsForPopups(modelName)
-//     for( controlId of controlIds ) {
-//       let control = document.getElementById(controlId)
-//       let newOption = document.createElement('option')
-//       newOption.value = optionValue
-//       newOption.appendChild(document.createTextNode(optionLabel))
-//       for(let attr of attrs){
-//           newOption.setAttribute(attr.name, attr.value)
-//       }
-//       if( control.getAttribute('selectAfterUpdate') > "" ) {
-//         newOption.setAttribute('selected', 'SELECTED')
-//         control.removeAttribute('updateFrom' + modelName)
-//       }
-//       if(control.options.length > 0) {
-//         control.insertBefore(newOption, control.firstChild)
-//         if(control.options.length > 1) {
-//             if("" == control.options[1].value) {
-//                 nullOption = control.removeChild(control.options[1])
-//                 control.insertBefore(nullOption, control.firstChild)
-//             }
-//         }
-//       } else {
-//         control.appendChild(newOption)
-//       }
-//       control.dispatchEvent(new Event('change'))
-//     }
-// }
 
-function addRelatedPopupButton( selectId, modelName, addUrl, addLabel='new' ) {
+function addRelatedPopupButton( selectId, modelName, addUrl, addLabel='new', addIcon='' ) {
     var select = document.getElementById(selectId)
     if( select != null ) {
         select.dataset.model=modelName
         var button_add = document.createElement('button')
         button_add.type = 'button'
         button_add.id = 'btn_related_add_' + selectId
+        if(addIcon>"") {
+            var img_add = document.createElement("img")
+            img_add.src=addIcon
+            button_add.appendChild(img_add)
+        }
         button_add.appendChild(document.createTextNode(addLabel))
         button_add.addEventListener('click', function() {
             select.setAttribute('selectAfterUpdate', 'True')
@@ -123,6 +101,29 @@ function addRelatedPopupButton( selectId, modelName, addUrl, addLabel='new' ) {
 
     }
 }
+
+
+function addRelatedPopupLink( selectId, modelName, addUrl, addLabel='new', addIcon='' ) {
+    var select = document.getElementById(selectId)
+    if( select != null ) {
+        select.dataset.model=modelName
+        var aAdd = document.createElement('a')
+        aAdd.href = '#'
+        aAdd.id = 'a_related_add_' + selectId
+        if(addIcon > "") {
+            var imgAdd = document.createElement("img")
+            imgAdd.src=addIcon
+            aAdd.appendChild(imgAdd)
+        }
+        aAdd.appendChild(document.createTextNode(addLabel))
+        aAdd.addEventListener('click', function() {
+            select.setAttribute('selectAfterUpdate', 'True')
+            var popup=window.open( addUrl )
+        });
+        select.parentNode.insertBefore(aAdd, select.nextSibling)
+    }
+}
+
 
 function showFilterField(select) {
     let ctlNum = select.id.substring(19)
