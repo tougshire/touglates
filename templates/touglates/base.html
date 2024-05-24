@@ -27,6 +27,10 @@
         </title>
       {% endblock %}
       {% block head_stylesheet %}
+        <link rel="stylesheet" href="{% static 'admin/css/base.css' %}">
+        <link rel="stylesheet" href="{% static 'admin/css/widgets.css' %}">
+        <link rel="stylesheet" href="{% static 'touglates/touglates.css' %}">
+
         {% for stylesheet in touglates.STYLESHEETS %}
           <link rel="stylesheet" href="{% static stylesheet %}">
         {% endfor %}
@@ -40,8 +44,6 @@
       {% comment %}The next four lines allow use of admin widgets{% endcomment %}
       <script src="{% url 'touglates:js-catlog' %}"></script>
       <script src="{% static '/admin/js/core.js' %}"></script>
-      <link rel="stylesheet" href="{% static 'admin/css/base.css' %}">
-      <link rel="stylesheet" href="{% static 'admin/css/widgets.css' %}">
       {% block head_extra %}
       {% endblock %}
     </head>
