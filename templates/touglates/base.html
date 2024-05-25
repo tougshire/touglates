@@ -1,6 +1,6 @@
 {% load static %}
+{% load touglates_tags %}
 <!DOCTYPE HTML>
-
 <html>
   {% block head %}
     <head>
@@ -23,7 +23,7 @@
       {% endblock %}
       {% block head_title %}
         <title>
-          {% if touglates.APP_TITLE %}{{ touglates.APP_TITLE }}{% else %}{{ touglates.SITE_TITLE }}{% endif %}{% if object.title %} : {{ object.title|safe  }}{% elif object.headline %} : {{ object.headline|safe  }}{% elif object.name %} : {{ object.name|safe }}{% endif %}
+          {% if touglates.SITE_NAME %}{{ touglates.SITE_NAME }}{% else %}{{ touglates.SITE_TITLE }}{% endif %}{% if object.title %} : {{ object.title|safe  }}{% elif object.headline %} : {{ object.headline|safe  }}{% elif object.name %} : {{ object.name|safe }}{% endif %}
         </title>
       {% endblock %}
       {% block head_stylesheet %}
@@ -49,5 +49,6 @@
     </head>
   {% endblock %}
   {% block body %}
+
   {% endblock %}
 </html>

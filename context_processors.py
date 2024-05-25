@@ -7,7 +7,6 @@ def touglates(request):
     if hasattr(settings, "TOUGLATES"):
         touglates = settings.TOUGLATES
     if app_name in settings.TOUGLATES:
-        for key in settings.TOUGLATES[app_name]:
-            touglates[key] = settings.TOUGLATES[app_name][key]
+        touglates.update(settings.TOUGLATES[app_name])
 
     return {"touglates": touglates}
