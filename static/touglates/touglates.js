@@ -50,8 +50,8 @@ function addFilterInput( selectId ) {
     }
 }
 
-function addOptionFromRelatedPopup(optionValue, optionLabel, modelName, attrs=[]) {
-    let controls = document.querySelectorAll("[data-model='" + modelName + "']")
+function addOptionFromRelatedPopup(optionValue, optionLabel, modelApp, modelName, attrs=[]) {
+    let controls = document.querySelectorAll("[data-model_app='" + modelApp + "'][data-model='" + modelName + "']")
     for( control of controls ) {
       let newOption = document.createElement('option')
       newOption.value = optionValue
@@ -103,10 +103,11 @@ function addRelatedPopupButton( selectId, modelName, addUrl, addLabel='new', add
 }
 
 
-function addRelatedPopupLink( selectId, modelName, addUrl, addLabel='new', addIcon='' ) {
+function addRelatedPopupLink( selectId, modelApp, modelName, addUrl, addLabel='new', addIcon='' ) {
     var select = document.getElementById(selectId)
     if( select != null ) {
         select.dataset.model=modelName
+        select.dataset.model_app=modelApp
         var aAdd = document.createElement('a')
         aAdd.href = '#'
         aAdd.id = 'a_related_add_' + selectId

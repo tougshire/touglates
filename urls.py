@@ -6,7 +6,7 @@ app_name = "touglates"
 
 urlpatterns = [
     path(
-        "popup_closer/<str:app_name>/<str:model_name>/<int:pk>/",
+        "popup_closer/<str:model_app>/<str:model_name>/<int:pk>/",
         popup_closer,
         name="popup_closer",
     ),
