@@ -320,7 +320,7 @@ function initSlugField( slugFieldId, slugIdFrag, inputIdFrag ) {
     if (slugField !== null && inputField !== null ) {
         inputField.addEventListener("change", function() {
         if(slugField.value == "" ) {
-            slugField.value=inputField.value.replace(/[ _]+/g, '-').toLowerCase();
+            slugField.value=inputField.value.replace(/[ _]+/g, '-').toLowerCase().replace(/[^a-z0-9\-]+/g, '');
         }
         })
     }
