@@ -50,8 +50,8 @@ function addFilterInput( selectId ) {
     }
 }
 
-function addOptionFromRelatedPopup(optionValue, optionLabel, modelApp, modelName, attrs=[]) {
-    let controls = document.querySelectorAll("[data-model_app='" + modelApp + "'][data-model='" + modelName + "']")
+function addOptionFromRelatedPopup(optionValue, optionLabel, appName, modelName, attrs=[]) {
+    let controls = document.querySelectorAll("[data-app_name='" + appName + "'][data-model_name='" + modelName + "']")
     for( control of controls ) {
       let newOption = document.createElement('option')
       newOption.value = optionValue
@@ -83,7 +83,7 @@ function addOptionFromRelatedPopup(optionValue, optionLabel, modelApp, modelName
 function addRelatedPopupButton( selectId, modelName, addUrl, addLabel='new', addIcon='' ) {
     var select = document.getElementById(selectId)
     if( select != null ) {
-        select.dataset.model=modelName
+        select.dataset.model_name=modelName
         var button_add = document.createElement('button')
         button_add.type = 'button'
         button_add.id = 'btn_related_add_' + selectId
@@ -103,11 +103,11 @@ function addRelatedPopupButton( selectId, modelName, addUrl, addLabel='new', add
 }
 
 
-function addRelatedPopupLink( selectId, modelApp, modelName, addUrl, addLabel='new', addIcon='' ) {
+function addRelatedPopupLink( selectId, appName, modelName, addUrl, addLabel='new', addIcon='' ) {
     var select = document.getElementById(selectId)
     if( select != null ) {
-        select.dataset.model=modelName
-        select.dataset.model_app=modelApp
+        select.dataset.model_name=modelName
+        select.dataset.app_name=appName
         var aAdd = document.createElement('a')
         aAdd.href = '#'
         aAdd.id = 'a_related_add_' + selectId

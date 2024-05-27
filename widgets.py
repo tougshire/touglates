@@ -40,7 +40,7 @@ class TouglateDateInput(DateInput):
         return context
 
 
-class TouglateRelatedSelect(Select):
+class TouglatesRelatedSelect(Select):
     template_name = "touglates/relatedselect_field.html"
 
     class Media:
