@@ -348,7 +348,7 @@ function intiateDropdown( widgetAttrsId ) {
       display.addEventListener("focusin", function(){
         updateDisplay( widgetAttrsId )
       })
-      selec.addEventListener("change", function(){
+      select.addEventListener("change", function(){
         updateDisplay( widgetAttrsId )
       })
       select.addEventListener("click", function(){
@@ -432,24 +432,24 @@ function intiateDropdown( widgetAttrsId ) {
 
   function hidedropdown( widgetAttrsId ) {
     var select = document.getElementById( widgetAttrsId )
-    var br = document.getElementById("br_" + widget.attrs.id )
-    var display = document.getElementById("display_" + widget.attrs.id )
-    var clear = document.getElementById("clear_" + widget.attrs.id )
+    var br = document.getElementById("br_" + widgetAttrsId )
+    var display = document.getElementById("display_" + widgetAttrsId )
+    var clear = document.getElementById("clear_" + widgetAttrsId )
 
 
     hidedropdowntimer[ widgetAttrsId ] = setTimeout(function() {
-      showHide(widget.attrs.id, "hide")
+      showHide(widgetAttrsId, "hide")
       for(p=0; p < select.options.length; p++ ) {
         select.options[p].style.display="block"
       }
-      updateDisplay(widget.attrs.id)
+      updateDisplay(widgetAttrsId)
     }, 100);
   }
   function clearselections( widgetAttrsId ) {
     var select = document.getElementById( widgetAttrsId )
-    var br = document.getElementById("br_" + widget.attrs.id )
-    var display = document.getElementById("display_" + widget.attrs.id )
-    var clear = document.getElementById("clear_" + widget.attrs.id )
+    var br = document.getElementById("br_" + widgetAttrsId )
+    var display = document.getElementById("display_" + widgetAttrsId )
+    var clear = document.getElementById("clear_" + widgetAttrsId )
 
     for(p=0; p < select.options.length; p++ ) {
         select.options[p].selected=false
