@@ -80,7 +80,7 @@ function addOptionFromRelatedPopup(optionValue, optionLabel, appName, modelName,
 }
 
 
-function addRelatedPopupButton( selectId, modelName, addUrl, addLabel='new', addIcon='' ) {
+function addRelatedPopupButton( selectId, modelName, addUrl, addLabel='new', addIcon='', to_field_name='' ) {
     var select = document.getElementById(selectId)
     if( select != null ) {
         select.dataset.model_name=modelName

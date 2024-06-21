@@ -10,5 +10,11 @@ urlpatterns = [
         popup_closer,
         name="popup_closer",
     ),
+    path(
+        "popup_closer/<str:app_name>/<str:model_name>/<int:pk>/<str:to_field_value>/",
+        popup_closer,
+        name="popup_closer",
+    ),
+
     path("jsi18n", JavaScriptCatalog.as_view(), name="js-catlog"),
 ]
