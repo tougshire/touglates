@@ -4,3 +4,6 @@ p {
 div.form-field-help-text {
     padding:0 1em 0 1em;
 }
+div.formset_title {
+    display:flex;
+}
