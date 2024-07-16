@@ -158,7 +158,8 @@ function showFilterField(select) {
       select.removeAttribute("name")
     }
   }
-  function addFilterFieldEventListeners(qty_searches) {
+
+function addFilterFieldEventListeners(qty_searches) {
     for( ctlNum = 0; ctlNum < qty_searches; ctlNum++ ) {
 
         document.getElementById('ctl_filter__field__' + ctlNum).addEventListener('change', function(e) {
@@ -172,7 +173,7 @@ function showFilterField(select) {
         })
         }
     }
-  }
+}
 
 function toggleVisibility(targetElId, switcherElId="", forceTo=2, showText="", hideText="", dataName='style_display', visibleStyle="") {
 
@@ -261,7 +262,7 @@ function showNewFormsetForm(findClass, removeClass='_findClass', addClass='', ad
   hides the non-form elements and displays the formset form
 */
 
-  function enableFormsetForm(formid, displayid) {
+function enableFormsetForm(formid, displayid) {
     document.getElementById(formid).style.display="block"
     document.getElementById(displayid).style.display="none"
 }
@@ -361,37 +362,37 @@ function intiateDropdown( widgetAttrsId ) {
 
 }
 
-  function showHide( widgetAttrsId, forceaction="") {
+function showHide( widgetAttrsId, forceaction="") {
     var select = document.getElementById( widgetAttrsId )
     var br = document.getElementById("br_" + widgetAttrsId )
     var display = document.getElementById("display_" + widgetAttrsId )
     var clear = document.getElementById("clear_" + widgetAttrsId )
 
     if( forceaction == "hide") {
-      select.style.display = "none"
-      br.style.display = "none"
+        select.style.display = "none"
+        br.style.display = "none"
 
     } else if ( forceaction=="show"){
         console.log("245ne07")
         console.log(select.dataset['initial_display'])
-      select.style.display = select.dataset['initial_display']
-      br.style.display = br.dataset['initial_display']
-
-    } else {
-      if(select.style.display == "none") {
         select.style.display = select.dataset['initial_display']
         br.style.display = br.dataset['initial_display']
 
-      } else {
+    } else {
+        if(select.style.display == "none") {
+        select.style.display = select.dataset['initial_display']
+        br.style.display = br.dataset['initial_display']
+
+        } else {
 
         select.style.display = "none"
         br.style.display = "none"
         updateDisplay( widgetAttrsId )
-      }
+        }
     }
-  }
+}
 
-  function updateDisplay( widgetAttrsId ) {
+function updateDisplay( widgetAttrsId ) {
     var select = document.getElementById( widgetAttrsId )
     var br = document.getElementById("br_" + widgetAttrsId )
     var display = document.getElementById("display_" + widgetAttrsId )
@@ -399,38 +400,39 @@ function intiateDropdown( widgetAttrsId ) {
 
     display.value = ""
     for(p=0; p < select.options.length; p++ ) {
-      if(select.options[p].selected ) {
+        if(select.options[p].selected ) {
         display.value = display.value + select.options[p].innerText + ","
-      }
+        }
     }
-  }
-  var filtertimer = {}
-  var hidedropdowntimer = {}
+}
 
-  function showdropdown( widgetAttrsId ) {
+var filtertimer = {}
+var hidedropdowntimer = {}
+
+function showdropdown( widgetAttrsId ) {
     var select = document.getElementById( widgetAttrsId )
     var br = document.getElementById("br_" + widgetAttrsId )
     var display = document.getElementById("display_" + widgetAttrsId )
     var clear = document.getElementById("clear_" + widgetAttrsId )
 
     if (typeof( filtertimer[ widgetAttrsId ]) !== undefined ) {
-      clearTimeout(filtertimer[ widgetAttrsId ])
+        clearTimeout(filtertimer[ widgetAttrsId ])
     }
     filtertimer["widgetAttrsId"] = setTimeout(function() {
-      showHide( widgetAttrsId, "show")
-      val = display.value.toLowerCase()
-      for(p=0; p < select.options.length; p++ ) {
-        var op = select.options[p]
-        if( op.innerText.toLowerCase().indexOf(val) > -1 ) {
-            op.style.display="block"
-        } else {
-            op.style.display="none"
+        showHide( widgetAttrsId, "show")
+    val = display.value.toLowerCase()
+    for(p=0; p < select.options.length; p++ ) {
+    var op = select.options[p]
+    if( op.innerText.toLowerCase().indexOf(val) > -1 ) {
+        op.style.display="block"
+            } else {
+                op.style.display="none"
+            }
         }
-      }
     }, 10);
-  }
+}
 
-  function hidedropdown( widgetAttrsId ) {
+function hidedropdown( widgetAttrsId ) {
     var select = document.getElementById( widgetAttrsId )
     var br = document.getElementById("br_" + widgetAttrsId )
     var display = document.getElementById("display_" + widgetAttrsId )
@@ -438,14 +440,15 @@ function intiateDropdown( widgetAttrsId ) {
 
 
     hidedropdowntimer[ widgetAttrsId ] = setTimeout(function() {
-      showHide(widgetAttrsId, "hide")
-      for(p=0; p < select.options.length; p++ ) {
-        select.options[p].style.display="block"
-      }
-      updateDisplay(widgetAttrsId)
+        showHide(widgetAttrsId, "hide")
+        for(p=0; p < select.options.length; p++ ) {
+            select.options[p].style.display="block"
+        }
+        updateDisplay(widgetAttrsId)
     }, 100);
-  }
-  function clearselections( widgetAttrsId ) {
+}
+
+function clearselections( widgetAttrsId ) {
     var select = document.getElementById( widgetAttrsId )
     var br = document.getElementById("br_" + widgetAttrsId )
     var display = document.getElementById("display_" + widgetAttrsId )
@@ -453,6 +456,6 @@ function intiateDropdown( widgetAttrsId ) {
 
     for(p=0; p < select.options.length; p++ ) {
         select.options[p].selected=false
-      }
-      updateDisplay( widgetAttrsId)
-  }
+    }
+    updateDisplay( widgetAttrsId)
+}
