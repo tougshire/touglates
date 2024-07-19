@@ -50,14 +50,21 @@ function addFilterInput( selectId ) {
     }
 }
 
-function addOptionFromRelatedPopup(optionValue, optionLabel, appName, modelName, attrs=[]) {
+function addOptionFromRelatedPopup(optionValue, optionLabel, modelName, appName, attrs="") {
     let controls = document.querySelectorAll("[data-app_name='" + appName + "'][data-model_name='" + modelName + "']")
-    for( control of controls ) {
+    for( let control of controls ) {
       let newOption = document.createElement('option')
       newOption.value = optionValue
       newOption.appendChild(document.createTextNode(optionLabel))
-      for(let attr of attrs){
-          newOption.setAttribute(attr.name, attr.value)
+      attrobj = attrs.split(",")
+
+      for(let attr of attrobj){
+        let splitattr = attr.split("=")
+        try {
+            newOption.setAttribute(splitattr[0], splitattr[1])
+        } catch(e) {
+            console.log("error setting attribute in addOptionfromRelatedPopup: " + e)
+        }
       }
       if( control.getAttribute('selectAfterUpdate') !== null ) {
         newOption.setAttribute('selected', 'SELECTED')
@@ -373,8 +380,6 @@ function showHide( widgetAttrsId, forceaction="") {
         br.style.display = "none"
 
     } else if ( forceaction=="show"){
-        console.log("245ne07")
-        console.log(select.dataset['initial_display'])
         select.style.display = select.dataset['initial_display']
         br.style.display = br.dataset['initial_display']
 
@@ -475,16 +480,10 @@ function applyStyles(sourceSelector, targetSelector, styleList ) {
         if(sourceEl && styleList) {
 
 			sourceStyle = window.getComputedStyle(sourceEl)
-            console.log(targetSelector)
             targetEls = document.querySelectorAll(targetSelector)
-            console.log(targetEls)
-
-            console.log(styleList)
 
 			for(let targetEl of targetEls) {
-                console.log(targetEl)
 				for( let s=0; s < styleList.length; s++ ) {
-                    console.log(styleList[s])
 					targetEl.style[ styleList[s] ] = sourceStyle[ styleList[s] ]
 				}
 			}
