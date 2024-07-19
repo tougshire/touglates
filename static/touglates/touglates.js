@@ -459,3 +459,53 @@ function clearselections( widgetAttrsId ) {
     }
     updateDisplay( widgetAttrsId)
 }
+
+function applyStyles(sourceSelector, targetSelector, styleList ) {
+
+    let sourceEl, targetEls, sourceStyle
+
+    try {
+
+	    sourceEl = document.querySelector(sourceSelector)
+
+        if(typeof styleList != 'object') {
+			styleList = [styleList]
+		}
+
+        if(sourceEl && styleList) {
+
+			sourceStyle = window.getComputedStyle(sourceEl)
+            console.log(targetSelector)
+            targetEls = document.querySelectorAll(targetSelector)
+            console.log(targetEls)
+
+            console.log(styleList)
+
+			for(let targetEl of targetEls) {
+                console.log(targetEl)
+				for( let s=0; s < styleList.length; s++ ) {
+                    console.log(styleList[s])
+					targetEl.style[ styleList[s] ] = sourceStyle[ styleList[s] ]
+				}
+			}
+		}
+    }
+	catch (err) {
+			console.log("error applying styles: " + err)
+			return
+	}
+
+}
+
+
+// function applyVerticalMargins() {
+//     var vapplyables = document.getElementsByClassName("js_vmargins")
+//     for (let vapplyable of vapplyables) {
+//         let sourceEl = document.getElementById(vapplyable.dataset.vmarginsource)
+//         let sourceStyle = document.defaultView.getComputedStyle(sourceEl)
+//         vapplyable.style.marginTop = sourceStyle.marginTop
+//         vapplyable.style.marginBottom = sourceStyle.marginBottom
+//     }
+// }
+
+

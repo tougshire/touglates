@@ -1,9 +1,16 @@
 p {
     margin-bottom:0;
 }
+
 div.form-field-help-text {
     padding:0 1em 0 1em;
 }
-div.formset_title {
+
+div.formsetaccessory--titlediv {
     display:flex;
+}
+
+button.formsetaccessory__button {
+    margin: auto 1em auto 1em;
+    font-size:.8em;
 }

@@ -3,7 +3,7 @@
 <!DOCTYPE HTML>
 <html>
   {% block head %}
-    <head>
+    <head><!-- 247hh10 -->
       {% block head_meta %}
         {% if object %}
           {% if object.title %}
@@ -41,7 +41,7 @@
       {% block head_script %}
         <script src="{% static 'touglates/touglates.js' %}"></script>
       {% endblock %}
-      {% comment %}The next four lines allow use of admin widgets{% endcomment %}
+      {% comment %}The next lines allow use of admin widgets{% endcomment %}
       <script src="{% url 'touglates:js-catlog' %}"></script>
       <script src="{% static '/admin/js/core.js' %}"></script>
       {% block head_extra %}
