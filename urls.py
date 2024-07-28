@@ -6,11 +6,12 @@ app_name = "touglates"
 
 urlpatterns = [
     path(
-        "popup_closer/<int:pk>/<str:app_name>/<str:model_name>/",
+        "popup_closer/<int:pk>/<str:model_name>/<str:app_name>/",
         popup_closer,
         name="popup_closer",
     ),
-    # to use this path, you use dashes for unused values ex:
+    # to use the following path, there must be values for all three of to_field_value, attrs, and callback
+    # For dummy values, you can use dashes ex:
     #           return reverse("touglates:popup_closer",
     #                 kwargs={
     #                     "pk": self.object.pk,

@@ -10,6 +10,15 @@ div.formsetaccessory--titlediv {
     display:flex;
 }
 
+div.formsetaccessory div {
+    padding-left: 1em;
+}
+
+div.formsetaccessory div:first-child {
+    padding-left: 0;
+}
+
+
 button.formsetaccessory__button {
     margin: auto 1em auto 1em;
     font-size:.8em;
