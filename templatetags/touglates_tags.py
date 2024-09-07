@@ -7,7 +7,7 @@ from django.utils.safestring import mark_safe
 
 register = template.Library()
 
-
+# Depreciated and will be removed in favor of context processor resplacement
 @register.simple_tag
 def project_include_file(name=""):
     if name == "":

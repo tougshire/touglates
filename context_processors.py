@@ -11,6 +11,7 @@ def base_context_settings(request):
 
     return {"base_context_settings": base_context_settings}
 
+#depreciated in favor of base_context_settings above
 def touglates(request):
     app_name = request.resolver_match.app_name
     touglates = {}
