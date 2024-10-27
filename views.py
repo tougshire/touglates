@@ -25,7 +25,6 @@ def popup_closer(request, app_name, model_name, pk, to_field_value="-", attrs="-
     response_text = f"""
     <script>
         window.opener.addOptionFromRelatedPopup("{value}","{label}","{model_name}","{app_name}", "{ attrs }")
-        alert("{ callbackcall }")
         { callbackcall }
         window.close()
     </script>
