@@ -31,3 +31,12 @@ def popup_closer(request, app_name, model_name, pk, to_field_value="-", attrs="-
     """
 
     return HttpResponse(response_text)
+
+def make_labels(model):
+        labels = {
+            field.name: field.verbose_name.title()
+            for field in model._meta.get_fields()
+            if type(field).__name__[-3:] != "Rel"
+        }
+
+        return labels
