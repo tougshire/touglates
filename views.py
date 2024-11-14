@@ -8,7 +8,7 @@ def popup_closer(request, app_name, model_name, pk, to_field_value="-", attrs="-
     object = apps.get_model(app_name, model_name).objects.get(pk=pk)
     label = escape(str(object))
     nothings=["-","_",""]
-    value = pk if  to_field_value in nothings else urllib.parse.unquote_plus(to_field_value)
+    value = pk if to_field_value in nothings else urllib.parse.unquote_plus(to_field_value)
     if to_field_value in nothings:
         to_field_value = ""
     if attrs in nothings:
