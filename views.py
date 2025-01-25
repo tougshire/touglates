@@ -7,10 +7,8 @@ import urllib
 def popup_closer(request, app_name, model_name, pk, to_field_value="-", attrs="-", callback="-"):
     object = apps.get_model(app_name, model_name).objects.get(pk=pk)
     label = escape(str(object))
-
-    value = pk if not to_field_value > "" else urllib.parse.unquote_plus(to_field_value)
-
-    nothings=["-","_"]
+    nothings=["-","_",""]
+    value = pk if to_field_value in nothings else urllib.parse.unquote_plus(to_field_value)
     if to_field_value in nothings:
         to_field_value = ""
     if attrs in nothings:
@@ -25,10 +23,18 @@ def popup_closer(request, app_name, model_name, pk, to_field_value="-", attrs="-
     response_text = f"""
     <script>
         window.opener.addOptionFromRelatedPopup("{value}","{label}","{model_name}","{app_name}", "{ attrs }")
-        alert("{ callbackcall }")
         { callbackcall }
         window.close()
     </script>
     """
 
     return HttpResponse(response_text)
+
+def make_labels(model):
+    labels = {
+        field.name: field.verbose_name.title()
+        for field in model._meta.get_fields()
+        if type(field).__name__[-3:] != "Rel"
+    }
+
+    return labels

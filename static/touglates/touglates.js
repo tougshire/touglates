@@ -56,14 +56,16 @@ function addOptionFromRelatedPopup(optionValue, optionLabel, modelName, appName,
       let newOption = document.createElement('option')
       newOption.value = optionValue
       newOption.appendChild(document.createTextNode(optionLabel))
-      attrobj = attrs.split(",")
+      if(attrs>"") {
+        attrobj = attrs.split(",")
 
-      for(let attr of attrobj){
-        let splitattr = attr.split("=")
-        try {
-            newOption.setAttribute(splitattr[0], splitattr[1])
-        } catch(e) {
-            console.log("error setting attribute in addOptionfromRelatedPopup: " + e)
+        for(let attr of attrobj){
+            let splitattr = attr.split("=")
+            try {
+                newOption.setAttribute(splitattr[0], splitattr[1])
+            } catch(e) {
+                console.log("error setting attribute in addOptionfromRelatedPopup: " + e)
+            }
         }
       }
       if( control.getAttribute('selectAfterUpdate') !== null ) {
