@@ -1,11 +1,13 @@
-import markdown as md
+import ast
+from urllib.parse import parse_qsl
+
 from django import template
 from django.conf import settings
 from django.template.defaultfilters import stringfilter
-from django.urls import reverse
-from django.utils.safestring import mark_safe
+from touglates.forms import BoundFieldWithAttrs
 
 register = template.Library()
+
 
 # Depreciated and will be removed in favor of context processor resplacement
 @register.simple_tag
@@ -31,3 +33,13 @@ def remove_linebreaks(value):
 @stringfilter
 def markdown(value):
     return markdown.markdown(value, extensions=["markdown.extensions.fenced_code"])
+
+
+@register.filter()
+def attrs(field, attrstring):
+    try:
+        attrs = ast.literal_eval(attrstring)
+    except SyntaxError:
+        attrs = dict(parse_qsl(attrstring))
+
+    return BoundFieldWithAttrs(field.form, field.field, field.name, attrs)

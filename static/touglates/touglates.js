@@ -281,16 +281,62 @@ function enableFormsetForm(formid, displayid) {
   When the user wants to add a related object, the user clicks on a button which
   displays a formset form
 */
-function enableAddFormsetForm(formclass) {
+function enableAddFormsetForm(formclass, to_form="") {
     let newforms = document.getElementsByClassName(formclass)
     if( newforms.length > 0) {
       let newform = newforms[0]
       newform.style.display="block"
       newform.classList.remove(formclass)
+      if( to_form > "") {
+        let form = document.getElementById(to_form)
+        for(let element of form.children) {
+            element.setAttribute("form", to_form)
+        }
+      return newform
     } else {
       alert('please save before adding more')
     }
   }
+}
+
+
+function set_index_name(element,index,form="") {
+    let elechildren = element.children
+    if(elechildren.length > 0) {
+        for(let i = 0; i < elechildren.length; i++) {
+            if(form>"") {
+                elechildren[i].setAttribute("form",form)
+            }
+            for(attr of elechildren[i].getAttributeNames()) {
+                console.log('looking at ' + attr)
+                if(elechildren[i].getAttribute(attr)) {
+                    console.log('changing ' + attr + ' to ' + elechildren[i].getAttribute(attr).replace("__prefix__",index))
+                    elechildren[i].setAttribute(attr, elechildren[i].getAttribute(attr).replace("__prefix__",index))
+                }
+            }
+            set_index_name(elechildren[i],index,form)
+        }
+    }
+}
+
+function createAddFormsetForm(formsetname, templateID, formID) {
+    let totalforms = document.getElementById("id_" + formsetname + "_set-TOTAL_FORMS")
+    let template = document.getElementById(templateID)
+    let form = document.getElementById(formID)
+    if( totalforms && template && form ) {
+        let newformdiv = template.cloneNode(true)
+        newformdiv.style.display="block"
+        form.appendChild(newformdiv)
+        totalforms.value++
+        set_index_name(newformdiv, totalforms.value-1, formID)
+        return newformdiv
+    } else {
+        if(!( totalforms ) ) { throw new Error("total forms value not found"); }
+        if(!( template ) ) { throw new Error("template not found"); }
+        if(!( form ) ) { throw new Error("form not found"); }
+    }
+}
+
 
 function adjustDate(target_id,days=0,today=false) {
     date_input = document.getElementById(target_id)
