@@ -11,6 +11,9 @@ urlpatterns = [
         name="popup_closer",
     ),
     # to use the following path, there must be values for all three of to_field_value, attrs, and callback
+    # to_field_value: The ID field.  If "-" then pk will be used
+    # attrs: Extra attrs to be included in the new select option
+    # callback: A javascript function to be called after the new select option is added
     # For dummy values, you can use dashes ex:
     #           return reverse("touglates:popup_closer",
     #                 kwargs={
@@ -18,8 +21,8 @@ urlpatterns = [
     #                     "model_name": self.model.__name__,
     #                     "app_name": self.model._meta.app_label,
     #                     "to_field_value":"-",
-    #                     "attrs":"-",
-    #                     "callback": "setPrimaryIdField"
+    #                     "attrs":"category=" + self.object.category,
+    #                     "callback": "setStyleByCategory"
     #                 },
     #             )
     path(
