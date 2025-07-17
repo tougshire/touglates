@@ -3,7 +3,7 @@
 <script>
 
   widget=document.getElementById('{{ widget.attrs.id|safe }}')
-  inp_due_date = document.getElementById('{{ widget.attrs.id }}')
+  inp_duedate = document.getElementById('{{ widget.attrs.id }}')
 
   {% if widget.buttons.all or widget.buttons.weeks or widget.buttons.increase_week or widget.buttons.increases %}
     button = document.createElement('button')
@@ -12,7 +12,7 @@
     button.dataset.days = "7"
     button.classList.add("adjust-date")
     button.innerHTML = '>>'
-    inp_due_date.parentNode.insertBefore(button, inp_due_date.nextSibling )
+    inp_duedate.parentNode.insertBefore(button, inp_duedate.nextSibling )
   {% endif %}
   {% if widget.buttons.all or widget.buttons.weeks or widget.buttons.decrease_week or widget.buttons.decreases %}
     button = document.createElement('button')
@@ -21,7 +21,7 @@
     button.dataset.days = "-7"
     button.classList.add("adjust-date")
     button.innerHTML = '<<'
-    inp_due_date.parentNode.insertBefore(button, inp_due_date )
+    inp_duedate.parentNode.insertBefore(button, inp_duedate )
   {% endif %}
   {% if widget.buttons.all or widget.buttons.days or widget.buttons.increase_day or widget.buttons.increases %}
     button = document.createElement('button')
@@ -30,7 +30,7 @@
     button.dataset.days = "1"
     button.classList.add("adjust-date")
     button.innerHTML = '>'
-    inp_due_date.parentNode.insertBefore(button, inp_due_date.nextSibling )
+    inp_duedate.parentNode.insertBefore(button, inp_duedate.nextSibling )
   {% endif %}
   {% if widget.buttons.all or widget.buttons.days or widget.buttons.decrease_day or widget.buttons.decreases %}
     button = document.createElement('button')
@@ -39,7 +39,7 @@
     button.dataset.days = "-1"
     button.innerHTML = '<'
     button.classList.add("adjust-date")
-    inp_due_date.parentNode.insertBefore(button, inp_due_date )
+    inp_duedate.parentNode.insertBefore(button, inp_duedate )
   {% endif %}
 
   {% if widget.buttons.all or widget.buttons.today %}
