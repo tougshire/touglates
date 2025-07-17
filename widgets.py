@@ -62,6 +62,9 @@ class DropdownSelectMultiple(SelectMultiple):
     template_name = "touglates/dropdown_select.html"
 
 
+class ClearableTextInput(TextInput):
+    template_name = "touglates/clearable_text.html"
+
 class SlugInput(TextInput):
     template_name = "touglates/slug_field.html"
 

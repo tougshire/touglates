@@ -1,0 +1,16 @@
+{% load static %}
+{% include "django/forms/widgets/input.html" %}
+<button id="clear_{{ widget.attrs.id }}"><img src="{% static 'touglates/clear_icon.ico' %}" style="height:.8em;" title="clear" alt_text="clear"></button>
+
+<script>
+
+  var input_{{ widget.attrs.id }} = document.getElementById("{{ widget.attrs.id }}")
+  var clear_{{ widget.attrs.id }} = document.getElementById("clear_{{ widget.attrs.id }}")
+  clear_{{ widget.attrs.id }}.addEventListener("click", function(e) {
+    e.preventDefault()
+    input_{{ widget.attrs.id }}.value = ""
+  })
+
+
+
+</script>
