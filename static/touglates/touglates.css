@@ -23,3 +23,19 @@ button.formsetaccessory__button {
     margin: auto 1em auto 1em;
     font-size:.8em;
 }
+
+input.widthshort {
+    width:15%;
+}
+input.widthlong {
+    width:75%;
+}
+input.widthxlong {
+    width:100%;
+}
+textarea.widthlong {
+    width:75%;
+}
+textarea.widthxlong {
+    width:95%;
+}
