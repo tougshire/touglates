@@ -39,3 +39,10 @@ textarea.widthlong {
 textarea.widthxlong {
     width:95%;
 }
+
+button.adjust-date {
+	padding-left:.1em;
+	padding-right: .1em;
+	background:none;
+	border:none;
+}

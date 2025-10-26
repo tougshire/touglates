@@ -338,7 +338,7 @@ function createAddFormsetForm(formsetname, templateID, formID) {
 }
 
 
-function adjustDate(target_id,days=0,today=false) {
+function adjustDate(target_id, days=0, months=0, today=false) {
     date_input = document.getElementById(target_id)
     if(today){
         newdate = new Date()
@@ -346,6 +346,7 @@ function adjustDate(target_id,days=0,today=false) {
         newdate = new Date(date_input.value)
     }
     newdate.setDate(newdate.getDate() + Number(days))
+    newdate.setMonth(newdate.getMonth() + Number(months))
     date_input.valueAsDate = newdate
 }
 

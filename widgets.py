@@ -9,28 +9,14 @@ from django.forms.widgets import (
 )
 
 
-class TouglateDateInput(DateInput):
+class TouglatesDateInput(DateInput):
     template_name = "touglates/date_field.html"
 
     class Media:
         js = ("touglates/touglates.js",)
 
-    def __init__(self, attrs={"type": "date"}, format=None, buttons={"all": "on"}):
+    def __init__(self, attrs={"type": "date"}, format=None, buttons=["all"]):
         super().__init__(attrs, format)
-
-        if not type(buttons) == dict:
-            buttonlist = (
-                [buttons]
-                if type(buttons) == str
-                else buttons if type(buttons) == list or type(buttons) == tuple else ()
-            )
-            buttons = {}
-            for buttonkey in buttonlist:
-                buttons[buttonkey] = "on"
-
-        for key in buttons:
-            if not buttons[key].lower() == "on":
-                buttons.pop(key)
 
         self.buttons = buttons
 
@@ -65,6 +51,7 @@ class DropdownSelectMultiple(SelectMultiple):
 class ClearableTextInput(TextInput):
     template_name = "touglates/clearable_text.html"
 
+
 class SlugInput(TextInput):
     template_name = "touglates/slug_field.html"
 
@@ -87,7 +74,6 @@ class SlugInput(TextInput):
 
 
 class HoneypotField(CharField):
-
     template_name = "touglates/honypot_field.html"
 
     def clean(self, value):
