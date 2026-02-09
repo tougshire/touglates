@@ -43,3 +43,8 @@ def attrs(field, attrstring):
         attrs = dict(parse_qsl(attrstring))
 
     return BoundFieldWithAttrs(field.form, field.field, field.name, attrs)
+
+#h/t https://www.geeksforgeeks.org/python/concatenate-strings-in-django-templates/ 
+@register.filter()
+def concate(first, second):
+    return str(first) + str(second)

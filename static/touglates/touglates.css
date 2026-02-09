@@ -46,3 +46,12 @@ button.adjust-date {
 	background:none;
 	border:none;
 }
+
+span.formset_delete::before {
+  content: "\00a0\00a0\00a0\ delete "
+}
+
+span.formset_delete {
+  font-style: italic;
+  font-size: .8em;
+}
