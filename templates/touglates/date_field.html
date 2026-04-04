@@ -1,5 +1,5 @@
 {% include "django/forms/widgets/date.html" %}
-
+va4730 {{ widget }}
 <script>
 
   widget=document.getElementById('{{ widget.attrs.id|safe }}')
@@ -16,18 +16,6 @@
     button.innerHTML = 'y>'
     inp_duedate.parentNode.insertBefore(button, inp_duedate.nextSibling )
   {% endif %}
-  {% if "all" in widget.buttons or "years" in widget.buttons or "decrease_year" in widget.buttons or "decreases" in widget.buttons %}
-    button = document.createElement('button')
-    button.type="button"
-    button.class="touglates_date_adjust"
-    button.dataset.target = widget.id
-    button.dataset.days = "0"
-    button.dataset.months = "-12"
-    button.classList.add("adjust-date")
-    button.innerHTML = '&lt;y'
-    inp_duedate.parentNode.insertBefore(button, inp_duedate )
-  {% endif %}
-  
   {% if "all" in widget.buttons or "months" in widget.buttons or "increase_month" in widget.buttons or "increases" in widget.buttons %}
     button = document.createElement('button')
     button.type="button"
@@ -38,17 +26,6 @@
     button.classList.add("adjust-date")
     button.innerHTML = 'm>'
     inp_duedate.parentNode.insertBefore(button, inp_duedate.nextSibling )
-  {% endif %}
-  {% if "all" in widget.buttons or "months" in widget.buttons or "decrease_month" in widget.buttons or "decreases" in widget.buttons %}
-    button = document.createElement('button')
-    button.type="button"
-    button.class="touglates_date_adjust"
-    button.dataset.target = widget.id
-    button.dataset.days = "0"
-    button.dataset.months = "-1"
-    button.classList.add("adjust-date")
-    button.innerHTML = '&lt;m'
-    inp_duedate.parentNode.insertBefore(button, inp_duedate )
   {% endif %}
   {% if "all" in widget.buttons or "weeks" in widget.buttons or "increase_week" in widget.buttons or "increases" in widget.buttons %}
     button = document.createElement('button')
@@ -61,17 +38,6 @@
     button.innerHTML = 'w>'
     inp_duedate.parentNode.insertBefore(button, inp_duedate.nextSibling )
   {% endif %}
-  {% if "all" in widget.buttons or "weeks" in widget.buttons or "decrease_week" in widget.buttons or "decreases" in widget.buttons %}
-    button = document.createElement('button')
-    button.type="button"
-    button.class="touglates_date_adjust"
-    button.dataset.target = widget.id
-    button.dataset.days = "-7"
-    button.dataset.months = "0"
-    button.classList.add("adjust-date")
-    button.innerHTML = '&lt;w'
-    inp_duedate.parentNode.insertBefore(button, inp_duedate )
-  {% endif %}
   {% if "all" in widget.buttons or "days" in widget.buttons or "increase_day" in widget.buttons or "increases" in widget.buttons %}
     button = document.createElement('button')
     button.type="button"
@@ -83,6 +49,17 @@
     button.innerHTML = 'd>'
     inp_duedate.parentNode.insertBefore(button, inp_duedate.nextSibling )
   {% endif %}
+  {% if "all" in widget.buttons or "today" in widget.buttons %}
+    button = document.createElement('button')
+    button.id = widget.id + '_button'
+    button.type = "button"
+    button.class="touglates_date_adjust"
+    button.dataset.target = widget.id
+    button.dataset.today = "true"
+    button.innerText='T'
+    button.classList.add("adjust-date")
+    widget.parentNode.insertBefore(button,widget.nextSibling)
+  {% endif %}
   {% if "all" in widget.buttons or "days" in widget.buttons or "decrease_day" in widget.buttons or "decreases" in widget.buttons %}
     button = document.createElement('button')
     button.type="button"
@@ -92,32 +69,57 @@
     button.dataset.months = "0"
     button.innerHTML = '&lt;d'
     button.classList.add("adjust-date")
-    inp_duedate.parentNode.insertBefore(button, inp_duedate )
+    inp_duedate.parentNode.insertBefore(button, inp_duedate.nextSibling )
   {% endif %}
-
-  {% if "all" in widget.buttons or "today" in widget.buttons %}
+  {% if "all" in widget.buttons or "weeks" in widget.buttons or "decrease_week" in widget.buttons or "decreases" in widget.buttons %}
     button = document.createElement('button')
-    button.id = widget.id + '_button'
-    button.type = "button"
+    button.type="button"
     button.class="touglates_date_adjust"
     button.dataset.target = widget.id
-    button.dataset.today = "true"
-    button.innerText='Today'
+    button.dataset.days = "-7"
+    button.dataset.months = "0"
     button.classList.add("adjust-date")
-    widget.parentNode.insertBefore(button,widget.nextSibling)
+    button.innerHTML = '&lt;w'
+    inp_duedate.parentNode.insertBefore(button, inp_duedate.nextSibling )
+  {% endif %}
+  {% if "all" in widget.buttons or "months" in widget.buttons or "decrease_month" in widget.buttons or "decreases" in widget.buttons %}
+    button = document.createElement('button')
+    button.type="button"
+    button.class="touglates_date_adjust"
+    button.dataset.target = widget.id
+    button.dataset.days = "0"
+    button.dataset.months = "-1"
+    button.classList.add("adjust-date")
+    button.innerHTML = '&lt;m'
+    inp_duedate.parentNode.insertBefore(button, inp_duedate.nextSibling )
+  {% endif %}
+  {% if "all" in widget.buttons or "years" in widget.buttons or "decrease_year" in widget.buttons or "decreases" in widget.buttons %}
+    button = document.createElement('button')
+    button.type="button"
+    button.class="touglates_date_adjust"
+    button.dataset.target = widget.id
+    button.dataset.days = "0"
+    button.dataset.months = "-12"
+    button.classList.add("adjust-date")
+    button.innerHTML = '&lt;y'
+    inp_duedate.parentNode.insertBefore(button, inp_duedate.nextSibling )
   {% endif %}
 
   buttons = document.getElementsByClassName("adjust-date")
 
   for(button of buttons) {
 
-    button.addEventListener("click", function(e){
-      e.preventDefault
-      if(e.target.dataset.today=="true") {
-        adjustDate(e.target.dataset.target, 0, 0, true)
-      } else {
-        adjustDate(e.target.dataset.target, e.target.dataset.days, e.target.dataset.months)
-      }
-    })
+    if(!(button.hasAttribute('touglates_dateadjustlistener'))) {
+      button.addEventListener("click", function(e){
+        e.preventDefault()
+        e.stopPropagation()
+        if(e.target.dataset.today=="true") {
+          adjustDate(e.target.dataset.target, 0, 0, true)
+        } else {
+          adjustDate(e.target.dataset.target, e.target.dataset.days, e.target.dataset.months)
+        }
+      })
+      button.setAttribute('touglates_dateadjustlistener', true)
+    }
   }
 </script>
