@@ -40,6 +40,20 @@ textarea.widthxlong {
     width:95%;
 }
 
+button.no_background {
+	padding-left:.1em;
+	padding-right: .1em;
+	background:none;
+	border:none;
+}
+
+button.light_background {
+	padding-left:.1em;
+	padding-right: .1em;
+	background:none;
+	border:.5px solid gray;;
+}
+
 button.adjust-date {
 	padding-left:.1em;
 	padding-right: .1em;
