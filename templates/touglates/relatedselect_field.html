@@ -3,11 +3,36 @@
 {% include "django/forms/widgets/select.html" %}
 
 {% if not widget.hide_add %}
+	<script>
+		addRelatedPopupLink( 
+			"{{ widget.attrs.id|safe }}", 
+			"{{ widget.related_data.app_name }}", 
+			"{{ widget.related_data.model_name }}", 
+			"{{ widget.related_data.add_url }}"
+			{% if widget.related_data.addlabel %}
+				, 
+				"{{ widget.related_data.addlabel }}"
+			{% else %}
+				,
+				"Add"
+			{% endif %}
+			{% if widget.related_data.addicon %}
+				,
+				"{{ widget.related_data.addicon }}"
+			{% else %}
+				,
+				"{% static 'admin/img/icon-addlink.svg' %}"
+			{% endif %}
+			{% if widget.related_data.to_field_name %}
+				,
+				"{{ widget.related_data.to_field_name }}"
+			{% endif %} 
+		)
+	</script>
+{% endif %}
 <script>
-  addRelatedPopupLink( "{{ widget.attrs.id|safe }}", "{{ widget.related_data.app_name }}", "{{ widget.related_data.model_name }}", "{{ widget.related_data.add_url }}"{% if widget.related_data.addlabel %}, "{{ widget.related_data.addlabel }}"{% else %},"Add"{% endif %}{% if widget.related_data.addicon %},"{{ widget.related_data.addicon }}"{% else %},"{% static 'admin/img/icon-addlink.svg' %}"{% endif %}{% if widget.related_data.to_field_name %},"{{ widget.related_data.to_field_name }}"{% endif %} )
   if("{{ widget.add_filter_input }}".toLowerCase() == "true" ) {
-    addFilterInput("{{ widget.attrs.id|safe }}")
+	addFilterInput("{{ widget.attrs.id|safe }}")
   }
 </script>
-{% endif %}
 </p>
