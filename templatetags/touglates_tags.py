@@ -6,6 +6,10 @@ from django.conf import settings
 from django.template.defaultfilters import stringfilter
 from touglates.forms import BoundFieldWithAttrs
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 register = template.Library()
 
 
@@ -16,11 +20,16 @@ def project_include_file(name=""):
         try:
             return settings.PROJECT_INCLUDE_FILE
         except AttributeError:
+            logger.error("Attribute Error in Touglates project_include_file.  Check if PROJECT_INCLUDE_FILE is in settings.")
             return None
     else:
         try:
             return settings.PROJECT_INCLUDE_FILES[name]
         except AttributeError:
+            logger.error("Attribute Error in Touglates project_include_file.  Check if PROJECT_INCLUDE_FILE is in settings.")
+            return None
+        except KeyError:
+            logger.error("Key Error in Touglates project_include_file.  Check if PROJECT_INCLUDE_FILE is in settings with key \"" + name + "\".")
             return None
 
 
